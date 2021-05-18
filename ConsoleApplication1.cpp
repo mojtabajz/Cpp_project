@@ -80,7 +80,7 @@ int main()
 						continue;
 					}
 					system("cls");
-					cout << "1=new game\n" << "2-continue";
+					cout << "1-new game\n" << "2-continue";
 
 					cin >> marhale;
 					if (marhale == 2) {
@@ -159,4 +159,6 @@ int main()
 		}
 	}
 	return 1;
+}
+
 }
