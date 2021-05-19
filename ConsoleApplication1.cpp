@@ -244,6 +244,42 @@ void shop()
 	}
 }
 
+
+string decryptfunc_token(string token)
+{
+	char text[100];
+	char temp;
+
+	for (int i = 0; text[i] != '\0'; ++i) {
+		temp = text[i];
+		//If the message to be decypted is in lower case.
+		if (temp >= 'a' && temp <= 'z') {
+			temp = temp - 3;
+
+			if (temp < 'a') {
+				temp = temp + 'z' - 'a' + 1;
+			}
+
+			text[i] = temp;
+		}
+		//If the message to be decypted is in upper case.
+		else if (temp >= 'A' && temp <= 'Z') {
+			temp = temp - 3;
+
+			if (temp < 'A') {
+				temp = temp + 'Z' - 'A' + 1;
+			}
+
+			text[i] = temp;
+		}
+	}
+
+	return token;
+
+}
+
+
+
 int main()
 {
 	shop();
@@ -291,6 +327,107 @@ int main()
 						cin >> marhale;
 						break;
 					}
+					case 3://start level3
+					{
+						system("CLS");
+
+						cout << "Emma and Daniel find themselves in prison...." << endl;
+						this_thread::sleep_for(chrono::seconds(5));
+
+						cout << "According to the contents of the book, Daniel sees signs in that place and realizes that this is the place and now they are in the pit." << endl;
+						this_thread::sleep_for(chrono::seconds(5));
+
+						cout << "A suspect approaches them and start talking to them:" << endl;
+
+
+						system("Color 0A");
+						this_thread::sleep_for(chrono::seconds(5));
+						cout << "suspect:hey guys !" << endl;
+
+						system("Color 04");
+						this_thread::sleep_for(chrono::seconds(5));
+						cout << "Emma: hi ...." << endl;
+
+						system("Color 0A");
+						this_thread::sleep_for(chrono::seconds(5));
+						cout << "suspect:what brings you here ? " << endl;
+
+						system("Color 04");
+						this_thread::sleep_for(chrono::seconds(5));
+						cout << "Emma:Do we know you?" << endl;
+
+						system("Color 0A");
+						this_thread::sleep_for(chrono::seconds(5));
+						cout << "suspect: i dont think that's a good question . you can trust ,i realy mean it !!" << endl << "so go ahead. tell me your story ";
+						this_thread::sleep_for(chrono::seconds(5));
+
+						cout << "Daniel and Emma told him their stories" << endl;
+						this_thread::sleep_for(chrono::seconds(5));
+
+						cout << "Now it's emma's choice !!" << endl;
+						this_thread::sleep_for(chrono::seconds(5));
+
+						int op_e;
+						cin >> op_e;
+						switch (op_e)
+						{
+						case 1://Admit that she is a spy
+						{
+							//Go to the torture room
+							break;
+						}
+						case 2://She is a tourist and has come to this city for fun
+						{
+							//Go to the test room
+							break;
+						}
+						break;
+						}
+
+						system("CLS");
+
+						cin >> op_e;
+						switch (op_e)
+						{
+						case 1://save daneil
+						{
+							//She dies to save his life
+							int op_d;
+							cin >> op_d;
+
+							switch (op_d)//daneil choise
+							{
+							case 1:
+							{
+								//Reach supernatural power
+								break;
+							}
+							case 2:
+							{
+								//bring emma to life
+								break;
+							}
+							break;
+							}
+							system("CLS");
+						}
+						case 2://Do not save Daniel
+						{
+							//start the war with Nazis
+							break;
+						}
+
+						//enter token to open the alala's gate
+						string token;
+						cin >> token;
+
+						if (decryptfunc_token(token) == "alala")
+							cout << "You won !";
+						break;
+						}
+						break;
+					}
+
 				}
 				break;
 			}
