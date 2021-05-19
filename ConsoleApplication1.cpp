@@ -10,7 +10,7 @@ class person {
 	//template<typename T>
 	friend void decrease(int ,string,person&);
 	public:
-		person(int gender,double health=100):gender(gender){
+		person(int gender,double health=100){
 			this->health = health;
 			id++;
 		}
@@ -26,7 +26,6 @@ class person {
 	private:
 		static long int money;	
 		int id;
-		const int gender;
 		double health;
 			
 };
@@ -40,26 +39,214 @@ void decrease(int coefficient,string which,person &pl) {
 		person::money -= coefficient;
 	}
 }
-class army {
+class weapon{
+	friend void shop();
 	public:
+		
+		weapon(int size_bullet , int reload):reload_time(reload)
+		{
+			this->size_bullet = size_bullet;
+		}
+		
 		void de_sb() {
-			size_bullet -= sized_bullet;
+			size_bullet -= per_click;
+			
+		}
+		
+		void All_bullets(int Bought_bullets)
+		{
+			all_bullets += Bought_bullets;
 		}
 	private:
+		const int reload_time;
+		int all_bullets;
 		int size_bullet;
-		int sized_bullet;
+		int per_click;
 };
 bool check( int mode) {
 	if (mode != 1 || mode != 2)
 		return true;
 	return false;
 }
-void operator --(army& gun) {
+void operator --(weapon& gun) {
 	gun.de_sb();
+}
+	
+void shop()
+{
+	int choise;
+	while(true)
+	{
+		cout << "0.Close" << endl << "1.Gun" << endl << "2.Bullet" << endl << "3.Health" << endl;
+		cin >> choise ;
+		if(choise == 0)
+		{
+			return ;
+		}
+		while(choise == 1)
+		{
+			cout << "0.Close" << endl << "1.Karabiner 98K" << endl << "2.Gewehr 41" << endl << "3.Gewehr 43" << endl << "4.Volkssturmgewehr" << endl ;
+			cin >> choise;
+			
+			if(choise == 1)
+			{
+				cout << "It is a German shotgun weapon.\n" << "It has 5 bullets.\n" << "Baking time 53 seconds.\n" << "The price of this weapon is x$\n" << "0.Close\n" << "1.Buy this weapon\n" ;
+				cin >> choise ;
+				if(choise == 0)
+				{
+					break;
+				}
+				else if(choise == 1)
+				{
+					//price
+					weapon Karabiner_98K(5,53);
+					break;
+				}
+			}
+			else if(choise == 2)
+			{
+				cout << "It is a German semi-automatic weapon.\n" << "It has 10 bullets.\n" << "Baking time 79 seconds.\n" << "The price of this weapon is x\n" << "0.Close\n" << "1.Buy this weapon\n" ;
+				cin >> choise ;
+				if(choise == 0)
+				{
+					break;
+				}
+				else if(choise == 1)
+				{
+					//price
+					weapon Gewehr_41(10,79);
+					break;
+				}
+			}
+			else if(choise == 3)
+			{
+				cout << "It is a German semi-automatic weapon.\n" << "It has 10 bullets.\n" << "Baking time 55 seconds.\n" << "The price of this weapon is x\n" << "0.Close\n" << "1.Buy this weapon\n" ;
+				cin >> choise ;
+				if(choise == 0)
+				{
+					break;
+				}
+				else if(choise == 1)
+				{
+					//price
+					weapon Gewehr_43(10,55);
+					break;
+				}
+			}
+			else if(choise == 4)
+			{
+				cout << "It is a German semi-automatic weapon.\n" << "It has 13 bullets.\n" << "Baking time 50 seconds.\n" << "The price of this weapon is x\n" << "0.Close\n" << "1.Buy this weapon\n" ;
+				cin >> choise ;
+				if(choise == 0)
+				{
+					break;
+				}
+				else if(choise == 1)
+				{
+					//price
+					weapon Volkssturmgewehr(13,50);
+					break;
+				}
+			}
+			
+		}
+		while(choise == 2)
+		{
+			cout << "0.Close" << endl << "1.Karabiner 98K" << endl << "2.Gewehr 41" << endl << "3.Gewehr 43" << endl << "4.Volkssturmgewehr" << endl ;
+			cin >> choise;
+			
+			if(choise == 1)
+			{
+				cout << "A pack of 10 bullets of this weapon\n" << "The price of these bullets is n\n" << "0.Close\n" << "1.Buy this pack\n" ;
+				cin >> choise ;
+				if(choise == 0)
+				{
+					break;
+				}
+				else if(choise == 1)
+				{
+					//price
+					Karabiner_98K.All_bullets(10);
+					break;
+				}
+			}
+			else if(choise == 2)
+			{
+				cout << "A pack of 15 bullets of this weapon\n" << "The price of these bullets is n\n" << "0.Close\n" << "1.Buy this pack\n" ;
+				cin >> choise ;
+				if(choise == 0)
+				{
+					break;
+				}
+				else if(choise == 1)
+				{
+					//price
+					Gewehr_41.All_bullets(15);
+					break;
+				}
+			}
+			else if(choise == 3)
+			{
+				cout << "A pack of 15 bullets of this weapon\n" << "The price of these bullets is n\n" << "0.Close\n" << "1.Buy this pack\n" ;
+				cin >> choise ;
+				if(choise == 0)
+				{
+					break;
+				}
+				else if(choise == 1)
+				{
+					//price
+					Gewehr_43.All_bullets(15);
+					break;
+				}
+			}
+			else if(choise == 4)
+			{
+				cout << "A pack of 20 bullets of this weapon\n" << "The price of these bullets is n\n" << "0.Close\n" << "1.Buy this pack\n" ;
+				cin >> choise ;
+				if(choise == 0)
+				{
+					break;
+				}
+				else if(choise == 1)
+				{
+					//price
+					Volkssturmgewehr.All_bullets(20);
+					break;
+				}
+			}
+		}
+		while(choise == 3)
+		{
+			cout << "0.Close\n" << "1.Bandage n$ (Adds 1 unit to health)\n" << "2.Patch n$ (Adds 0.5 unit to health)\n" << "3.Vitamin n$ (Adds 1.5 unit to health)\n" ;
+			cin >> choise ;
+			 
+			if(choise == 0)
+			{
+				break;
+			}
+			else if(choise == 1)
+			{
+				//price
+				//health
+			}
+			else if(choise == 2)
+			{
+				//price
+				//health
+			}
+			else if(choise == 3)
+			{
+				//price
+				//healse
+			}
+		}
+	}
 }
 
 int main()
 {
+	shop();
 	int menu,which,marhale, money, health;
 	fstream saver("save.txt", ios::in | ios::out);
 	person D(1);
