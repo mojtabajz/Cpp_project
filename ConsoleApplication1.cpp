@@ -2,9 +2,13 @@
 #include <fstream>
 #include <thread>
 #include <chrono>
+#include <string>
+#include <windows.h>  
+
 int co_i;//
 double co_d;//
 int mode;//in se khat baraye sakhti bazi
+
 using namespace std;
 class person {
 	//template<typename T>
