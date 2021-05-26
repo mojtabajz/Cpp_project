@@ -11,36 +11,59 @@ int mode;//in se khat baraye sakhti bazi
 
 using namespace std;
 class person {
+	friend void save_replace(person &E,person &D);//inja chon ba estefade az id mikhaim seekp anjam bedam mrs:)
+	friend bool check_id(person &E,person &D,int id);//inja chon ba estefade az id mikhaim seekg anjam bedam mrs:)
 	//template<typename T>
 	friend void decrease(int ,string,person&);
 	public:
-		person(int gender,double health=100){
+		person(int gender,double health=100,double money=1000):gender(gender){//gender ro kamel kardam va money ro ezafe kardam
 			this->health = health;
-			id++;
+			this->money=money;
+			//if(gender==1)//agar in nabashe dobar id ro ziad mikone
+				//id++; bedard nemikhord mrs:)
 		}
 		void set( double money , double health ) {						
 			this->health = health;
 		};
-		void get() {
+		void get()const {
 			cout << health << '\t' << money << '\t';
 		}
-		static void mo(int moneyy) {
+		/*static void mo(int moneyy) { chon static ro hazf kardam mrs:)
 			money = moneyy;
+		}*/
+		void print_information()const{//baraye fahmidan vaziat mrs:)
+			if(gender==1)
+				cout<<"Emma\n";
+			else
+				cout<<"Daniel\n";
+			cout<<"your id is :"<<id<<endl;
+			cout<<"your health is :"<<health<<endl;
+			cout<<"your money is :"<<money<<endl;
+		}
+		int get_id()const{//baraye malom kardan id mrs:)
+			return id;
+		}
+		void set_id(int id){//baraye ghesmat new game ke id yeksan nashe mrs:)
+			this->id=id;
+		}
+		void de(){//alaki
+			health--;
 		}
 	private:
-		static long int money;	
-		int id;
+		//static long int money;	hazf shod mrs:)
+		double money; 
+		int id=0;// age shod ham static bezan ham gheir ta faghat ye id neveshte beshe mrs:)bara khodame shoma nadide begir:)
 		double health;
-			
+		const int gender;//ezafe shod mrs:)
 };
-long int person::money=1000;
+//long int person::money=1000; hazf shod mrs:)
 //template<typename T>
 void decrease(int coefficient,string which,person &pl) {
 	if (which == "h") {
 		pl.health -= coefficient;
 	}
 	if (which == "m") {
-		person::money -= coefficient;
+	//	person::money -= coefficient;
 	}
 }
 class weapon{
@@ -357,15 +380,108 @@ bool decryptfunc_token(string token)//Caesar Cipher decryptfunc with 3 times shi
 
 }
 
+//in tabe baraye save kardan mavaghei hast ke mikhaim ezafe beshe be filemon mrs:)
+void save_append(person &E,person &D){
+	ofstream saver("save_E.txt", ios::app);
+	if (!saver) {
+		cerr << "can not open\n";
+		exit(0);
+	}	
+	saver.write(reinterpret_cast<const char*>(&E), (sizeof(person)));
+	saver.close();
+	
+	ofstream saverr("save_D.txt", ios::app);
+	if (!saverr) {
+		cerr << "can not open\n";
+		exit(0);
+	}
+	saverr.write(reinterpret_cast<const char*>(&D), (sizeof(person)));
+	saverr.close();
+}
 
+//in tabe baraye mavaghei hast ke mikhaim etelaat ro be roz  konim  mrs:)
+void save_replace(person &E,person &D) {
+	ofstream  osave("save_E.txt", ios::binary);
+	if (!osave) {
+		cerr << "cant2";
+		exit(0);
+	}			
+		osave.seekp(E.id*sizeof(person));
+		osave.write(reinterpret_cast<const char*>(&E), sizeof(person));
+		osave.close();
+		
+		
+	ofstream  osavee("save_D.txt", ios::binary);
+	if (!osavee) {
+		cerr << "cant2";
+		exit(0);
+	}			
+		osavee.seekp(D.id*sizeof(person));
+		osavee.write(reinterpret_cast<const char*>(&D), sizeof(person));
+		osavee.close();
+}
 
+//baraye check kardan ke id vared shode vojod dare ya na mrs:)
+bool check_id(person &E,person &D,int id){
+	for(int i=0;;i++){
+		
+		ifstream rsave("save_E.txt", ios::in);
+		if (!rsave) {
+			cerr << "nabod ";
+			
+		}
+		rsave.seekg(i* (sizeof(person)));	
+		
+		rsave.read(reinterpret_cast<char*>(&E),
+			sizeof(person));
+			if(E.get_id()==id){
+				rsave.close();				
+				ifstream Rsavee("save_D.txt", ios::in);
+				if (!Rsavee) {
+					cerr << "cant2";
+					exit(0);
+				}		
+				Rsavee.seekg(i* (sizeof(person)));
+				Rsavee.read(reinterpret_cast<char*>(&D),
+					sizeof(person));
+				Rsavee.close();
+				
+				return true;
+			}
+			if(rsave.eof()){
+				
+				rsave.clear();//fek konam bodan in khat va badish lazem nabashe mrs:)
+				rsave.seekg(0);
+				rsave.close();
+				
+				return 0;
+			}			
+				
+	}
+}
+
+void set_id(person &copy){//baraye ok kardan ghesmat new game  mrs:)
+	ifstream check("save_E.txt", ios::in);
+	if (!check) {
+		cerr << "file save peyda nashod \n ";
+		
+	}	
+	else{
+		check.seekg(-1*sizeof(person),ios::end);		
+			
+	check.read(reinterpret_cast<char*>(&copy),
+		sizeof(person));		
+	check.close();
+	}
+}
 int main()
 {
 	shop();
-	int menu,which,marhale, money, health;
-	fstream saver("save.txt", ios::in | ios::out);
-	person D(1);
-	person E(0);
+	int menu,which,marhale, money, health,id;//int id ro ezafe kardam mrs:)
+	//fstream saver("save.txt", ios::in | ios::out); be in niaz nist mrs:)
+	person test(0);
+	person D(0);
+	person E(1);
 	for (;;) {
 			system("cls");
 			cout << "1-play" << endl << "2-setting" << endl << "3-shop" << endl;
@@ -382,16 +498,39 @@ int main()
 						continue;
 					}
 					system("cls");
-					cout << "1-new game\n" << "2-continue";
+					cout << "1-new game\n" << "2-continue \n";
 
 					cin >> marhale;
 					if (marhale == 2) {
-						
-						
-						saver >> marhale>>money>>health;						
+						cout<<"please input your id \n";//ezafe kardan ghesmat continue mrs:)
+						while(true){
+							cin>>id;
+							if(check_id(E,D,id)){
+								
+								cout<<"loading succesful:)\n ";
+								E.print_information();
+								D.print_information();
+								break;
+							}
+							else{
+								cout<<"try again :( \n";
+							}
+						}
+						//saver >> marhale>>money>>health;	be in niaz nist mrs:)
 						//pl.set();
-						saver.close();
+						//saver.close()	;	be in niaz nist mrs:)
 					}
+					else
+						if(marhale==1){
+							set_id(test);
+							E.set_id(test.get_id()+1);
+							D.set_id(test.get_id()+1);
+							save_append(E,D);
+							
+							E.print_information();
+							D.print_information();
+						}
+					//}
 					break;
 				}		
 				switch (marhale) {
@@ -399,11 +538,13 @@ int main()
 					{
 						int choise;
 						cout << "1: two-way belief" << endl;
+						E.de();
+						save_replace(E,D);
 						this_thread::sleep_for(chrono::seconds(5));
 						system("cls");
 						
 						cout << "Due to the suspicious activities of the Nazis in Myanmar, the Soviet Army needed to send an agent to Myanmar to infiltrate the Nazis." << endl;
-						this_thread::sleep_for(chrono::seconds(5));
+//						this_thread::sleep_for(chrono::seconds(5)); alaki
 						
 						cout << "This mission is offered to Emma..." << endl;
 						this_thread::sleep_for(chrono::seconds(2));
@@ -741,7 +882,7 @@ int main()
 
 				}
 				break;
-			}
+			//}
 
 
 
