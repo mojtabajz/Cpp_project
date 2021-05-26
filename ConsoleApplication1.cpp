@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <thread>
 #include <chrono>
@@ -394,7 +394,8 @@ int main()
 					}
 					break;
 				}		
-				switch (marhale) {
+				switch (marhale)
+				{
 					case 1:
 					{
 						int choise;
@@ -666,16 +667,44 @@ int main()
 						this_thread::sleep_for(chrono::seconds(5));
 						system("CLS");
 
-						int op_e_a;
-						cin >> op_e_a;
-						if (op_e_a == 1)//Admit that she is a spy
+						int choice;
+						cin >> choice;
+						if (choice == 1)//Admit that she is a spy
 						{
+							cout << "She confess that she is russian spy !" << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							system("CLS");
+							cout << "Suspect guy tell to the Nazis that they are russian spies who they were looking for them " << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							system("CLS");
 							//Go to the torture room
 
+							cout << "The Nazis take them to a torture chamber for collecting information about thier information " << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							system("CLS");
+							cout << "Right Before interrogators arrive,A tray full of winning tools catches Emma's eye! " << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							system("CLS");
+							cout << "Emma picked up a sharp tool with all her might and freed herself and Daniel from the ropes " << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							system("CLS");
+
+
+
 						}
-						else if (op_e_a == 2)//She is a tourist and has come to this city for fun
+						else if (choice == 2)//She is a tourist and has come to this city for fun
 						{
+							system("CLS");
+							cout << "The Nazis cut them to test on them" << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							system("CLS");
 							//Go to the test room
+							cout << "Before the scientists arrived, a tray full of winning tools caught Emma's eye" << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							system("CLS");
+							cout << "And Emma took a sharp tool with all her might and freed herself and Daniel from the ropes" << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							system("CLS");
 
 						}
 						else
@@ -684,26 +713,149 @@ int main()
 							return 0;
 						}
 
-
+						system("CLS");
+						cout << "Their eyes catch on the rocket launcher and they catch it and run to the end of the corridor behind the room, which leads to a dead end" << endl;
+						this_thread::sleep_for(chrono::seconds(5));
+						system("CLS");
+						cout << "Daniel realizes that this is where the book says and the gate opens" << endl;
+						this_thread::sleep_for(chrono::seconds(5));
+						system("CLS");
+						cout << "Suddenly his eye falls on a flat and strange part of the wall and goes towards him" << endl;
+						this_thread::sleep_for(chrono::seconds(5));
+						system("CLS");
+						cout << "When he touches it, a series of sentences appear in a foreign language and Daniel has to decipher it" << endl;
+						this_thread::sleep_for(chrono::seconds(5));
 
 						system("CLS");
 
-						int op_e_b;
-						cin >> op_e_b;
 
-						if (op_e_b == 1)
-							//save daneil
+						//enter token to open the alala's gate
+						string token;
+						cin >> token;
+
+						if (decryptfunc_token(token) == true)
 						{
-							//She dies to save his life
-							int op_d;
-							cin >> op_d; //daneil choise
-							if (op_d == 1)
+							cout << "Gate is open !";
+
+							system("CLS");
+							cout << "When he touches it, a series of sentences appear in a foreign language and Daniel has to decipher it" << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							system("CLS");
+							cout << "Emma, ​​who was a little further from the gate, has two decisions:" << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							system("CLS");
+							cout << "1)Go to Daniel to save him" << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							system("CLS");
+							cout << "2)Move further away from the gate to be safe" << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							system("CLS");
+
+
+							int choice2;
+							cin >> choice2;
+
+							if (choice2 == 1) //save daneil
 							{
-								//Reach supernatural power
+								//She dies to save his life
+								cout << "Both Emma and Daniel are dragged into gate the underworld and face Alala" << endl;
+								this_thread::sleep_for(chrono::seconds(5));
+								system("CLS");
+								cout << "Both Emma and Daniel are dragged into gate the underworld and face Alala" << endl;
+								this_thread::sleep_for(chrono::seconds(5));
+								system("CLS");
+								cout << "Suddenly, Emma takes offense for fear and fires a rocket at Alala, causing Alala to kill her..." << endl;
+								this_thread::sleep_for(chrono::seconds(5));
+								system("CLS");
+								cout << "Now Daniel is very sad about Emma's death" << endl;
+								this_thread::sleep_for(chrono::seconds(5));
+								system("CLS");
+								cout << " Alala tells him the story of the Nazisand tells them that you must get them out so that they do not harm the world any more" << endl;
+								this_thread::sleep_for(chrono::seconds(5));
+								system("CLS");
+								cout << "It gives Daniel the right to choose between two things" << endl;
+								this_thread::sleep_for(chrono::seconds(5));
+								system("CLS");
+								cout << "1)Reach the supernatural power" << endl;
+								this_thread::sleep_for(chrono::seconds(5));
+								system("CLS");
+
+								cout << "2)Let her live" << endl;
+								this_thread::sleep_for(chrono::seconds(5));
+								system("CLS");
+
+
+
+								int choiceD;
+								cin >> choiceD; //daneil choise
+								if (choiceD == 1)
+								{
+									//Reach supernatural power
+									system("CLS");
+									cout << "Then he comes out of the gate and destroys the Nazis in that area with the power he has" << endl;
+									this_thread::sleep_for(chrono::seconds(5));
+									system("CLS");
+
+
+									while (true)
+									{
+										shop();
+										if (G1 > 0 || G2 > 0 || G3 > 0 || G4 > 0)
+										{
+											cout << "It was a good choice." << endl;
+											break;
+										}
+									}
+
+								}
+								else if (choiceD == 2)
+								{
+									//bring emma to life
+									system("CLS");
+									cout << "emma comes alive and together they destroy the trachea of ​​that area" << endl;
+									this_thread::sleep_for(chrono::seconds(5));
+									system("CLS");
+
+									while (true)
+									{
+										shop();
+										if (G1 > 0 || G2 > 0 || G3 > 0 || G4 > 0)
+										{
+											cout << "It was a good choice." << endl;
+											break;
+										}
+									}
+								}
+								else
+								{
+									cout << "An error has occurred!";
+									return 0;
+								}
+
 							}
-							else if (op_d == 2)
+							else if (choice2 == 2)//Do not save Daniel
 							{
-								//bring emma to life
+								//start the war with Nazis
+								system("CLS");
+								cout << "Daniel goes to the gate and seizes power and tells Emma what the story of the Nazis is. Together they destroy the Nazis" << endl;
+								this_thread::sleep_for(chrono::seconds(5));
+								system("CLS");
+								while (true)
+								{
+									shop();
+									if (G1 > 0 || G2 > 0 || G3 > 0 || G4 > 0)
+									{
+										cout << "It was a good choice." << endl;
+										break;
+									}
+								}
+								system("CLS");
+								cout << "After the destruction of the Nazis, they take people out of prison and save them, and they destroy that pit forever" << endl;
+								this_thread::sleep_for(chrono::seconds(5));
+								system("CLS");
+								cout << "The END ..." << endl;
+								this_thread::sleep_for(chrono::seconds(5));
+								system("CLS");
 							}
 							else
 							{
@@ -712,28 +864,12 @@ int main()
 							}
 
 						}
-						else if (op_e_b == 2)//Do not save Daniel
-						{
-							//start the war with Nazis
-						}
+
+
 						else
-						{
-							cout << "An error has occurred!";
-							return 0;
-						}
+							cout << "Can't enter gate:(";
 
 
-
-						//enter token to open the alala's gate
-						string token;
-						cin >> token;
-
-						if (decryptfunc_token(token) == true)
-							cout << "You won !";
-						else
-							cout << "You lose :(";
-
-				
 					break;
 						}
 						break;
@@ -742,18 +878,6 @@ int main()
 				}
 				break;
 			}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 			case 2: {
