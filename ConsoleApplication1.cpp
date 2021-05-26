@@ -46,16 +46,13 @@ void decrease(int coefficient,string which,person &pl) {
 class weapon{
 	friend void shop();
 	public:
-		weapon(): reload_time()
-		{
-			
-		}
+
 		weapon(int size_bullet , int reload):reload_time(reload)
 		{
 			this->size_bullet = size_bullet;
 		}
 		
-		void de_sb() {
+		void de_sb(int per_click) {
 			size_bullet -= per_click;
 			
 		}
@@ -68,22 +65,26 @@ class weapon{
 		const int reload_time;//time of baking
 		int all_bullets;
 		int size_bullet;
-		int per_click;
+		//int per_click;  delete
 };
 bool check( int mode) {
 	if (mode != 1 || mode != 2)
 		return true;
 	return false;
 }
-void operator --(weapon& gun) {
+/*void operator --(weapon& gun) {
 	gun.de_sb();
-}
+}*/
 
+weapon Karabiner_98K(5,53);
+weapon Gewehr_41(10,79);
+weapon Gewehr_43(10,55);
+weapon Volkssturmgewehr(13,50);
 
+weapon Gun[4]={Karabiner_98K , Gewehr_41 , Gewehr_43 , Volkssturmgewehr};
 int G1=0,G2=0,G3=0,G4=0;//entekhab selah faghat yek bar baraye shop
 void shop()
 {
-	weapon Gun[4];
 	
 	int choise;
 	while(true)
@@ -111,9 +112,9 @@ void shop()
 				{
 					//price
 					
-					
-					weapon Karabiner_98K(5,53);
-					Gun[0] = Karabiner_98K;
+					G2=0;
+					G3=0;
+					G4=0;
 					
 					G1++;
 					break;
@@ -136,8 +137,9 @@ void shop()
 				{
 					//price
 					
-					weapon Gewehr_41(10,79);
-					Gun[1] = Gewehr_41;
+					G1=0;
+					G3=0;
+					G4=0;
 					
 					G2++;
 					break;
@@ -160,8 +162,9 @@ void shop()
 				{
 					//price
 					
-					weapon Gewehr_43(10,55);
-					Gun[2] = Gewehr_43;
+					G1=0;
+					G2=0;
+					G4=0;
 					
 					G3++;
 					break;
@@ -184,8 +187,9 @@ void shop()
 				{
 					//price
 					
-					weapon Volkssturmgewehr(13,50);
-					Gun[3] = Volkssturmgewehr;
+					G1=0;
+					G2=0;
+					G3=0;
 					
 					G4++;
 					break;
@@ -214,11 +218,9 @@ void shop()
 				else if(choise == 1&&G1 == 1)
 				{
 					//price
-					//Karabiner_98K.All_bullets(10);
-					for(int j=0; j<4 ;j++)
-					{
-						Gun[i].All_bullets(10);
-					}
+					
+					
+					Gun[0].All_bullets(10);
 					break;
 				}
 			}
@@ -233,11 +235,9 @@ void shop()
 				else if(choise == 1&&G2 == 1)
 				{
 					//price
-					//Gewehr_41.All_bullets(15);
-					for(int j=0; j<4 ;j++)
-					{
-						Gun[i].All_bullets(15);
-					}
+					
+					Gun[1].All_bullets(15);
+					
 					break;
 				}
 			}
@@ -252,11 +252,9 @@ void shop()
 				else if(choise == 1&&G3 == 1)
 				{
 					//price
-					//Gewehr_43.All_bullets(15);
-					for(int j=0; j<4 ;j++)
-					{
-						Gun[i].All_bullets(15);
-					}
+					
+					Gun[2].All_bullets(15);
+					
 					break;
 				}
 			}
@@ -271,11 +269,9 @@ void shop()
 				else if(choise == 1&&G4 == 1)
 				{
 					//price
-					//Volkssturmgewehr.All_bullets(20);
-					for(int j=0; j<4 ;j++)
-					{
-						Gun[i].All_bullets(20);
-					}
+					
+					Gun[3].All_bullets(20);
+					
 					break;
 				}
 			}
@@ -308,6 +304,25 @@ void shop()
 	}
 }
 
+void decreas_bullet(int BULLET)
+{
+	if(G1 == 1)
+	{
+		Gun[0].de_sb(BULLET);
+	}
+	else if(G2 == 1)
+	{
+		Gun[1].de_sb(BULLET);
+	}
+	else if(G3 == 1)
+	{
+		Gun[2].de_sb(BULLET);
+	}
+	else if(G4 == 1)
+	{
+		Gun[3].de_sb(BULLET);
+	}
+}
 
 string decryptfunc_token(string token)
 {
@@ -433,23 +448,20 @@ int main()
 						this_thread::sleep_for(chrono::seconds(2));
 						cout << "After touring Myanmar and gathering information, Emma discovers Nazi activity in the forests of Bagan.\n" << " He goes there to do his mission." << endl;
 						this_thread::sleep_for(chrono::seconds(8));
-						cout << "In the middle of the night, while wandering in the woods,\n" << " he met Daniel and at first thought he was a Nazi because of the equipment Daniel had with him (which Daniel had bought from the natives and had a Nazi symbol)." << endl;
-						this_thread::sleep_for(chrono::seconds(8));
+						cout << "In the middle of the night, while wandering in the woods,\n" << "She met Daniel and at first thought he was a Nazi because of the equipment Daniel had with him (which Daniel had bought from the natives and had a Nazi symbol)." << endl;
+						this_thread::sleep_for(chrono::seconds(20));
 						
-						cout << "So he went to her so that she could approach him and penetrate their position." << endl;
+						cout << "So Emma went to her so that she could approach him and penetrate their position." << endl;
 						this_thread::sleep_for(chrono::seconds(2));
 						system("cls");
 						
-						/*Conversation between Emma and Daniel about what they do here and these stuff
 						
-						Daniel told his own story and why he came here, and Emma,
-						who thought Daniel was a Nazi, thought the story Daniel had told her was a lie. 
+						//cout << "Daniel told his own story and why he came here, and Emma,who thought Daniel was a Nazi, thought the story Daniel had told her was a lie. 
 						
-						*/
 						system("cls");
 						cout << "After spending the night in the wood near dawn, they suddenly stumble upon a Nazi camp.\n" << " At that moment, 4 Nazi soldiers see them. Daniel quickly flees in fear." << endl;
 						this_thread::sleep_for(chrono::seconds(10));
-						systam("cls");
+						system("cls");
 						while(true)
 						{
 							cout << "Emma:" << endl << "1.I shoot at the Nazis and then run away" << endl << "2.I escape" << endl;
@@ -458,7 +470,7 @@ int main()
 							{
 								cout << "Emma fires three bullets at the Nazis and kills two of them" << endl;
 								this_thread::sleep_for(chrono::seconds(2));
-								//bayad se td tir kam she
+								decreas_bullet(3);
 								cout << "Then Emma runs away" << endl;
 								this_thread::sleep_for(chrono::seconds(1));
 								cout << "The Nazis chase after them and shoot at them.\n" ;
@@ -480,7 +492,7 @@ int main()
 									cin >> choise ;
 									if(choise == 1)
 									{
-										cout << "They cross the bridge and reach the abandoned huts."
+										cout << "They cross the bridge and reach the abandoned huts." << endl;
 										this_thread::sleep_for(chrono::seconds(3));
 										//bazi farie
 										break;
@@ -539,7 +551,7 @@ int main()
 												cout << "Daniel throws a stone at the Nazi soldier." << endl;
 												this_thread::sleep_for(chrono::seconds(2));
 												cout << "Nazia gets angry and points her gun at Daniel, who is suddenly shot by Emma from a distance." << endl;
-												//do ta tr kam mishe
+												decreas_bullet(2);
 												this_thread::sleep_for(chrono::seconds(3));
 												break;
 											}
@@ -552,7 +564,7 @@ int main()
 												break;
 											}
 										}
-										break	
+										break;
 									}
 									else if(choise == 2)
 									{
