@@ -324,36 +324,36 @@ void decreas_bullet(int BULLET)
 	}
 }
 
-string decryptfunc_token(string token)
+bool decryptfunc_token(string token)//Caesar Cipher decryptfunc with 3 times shift
 {
-	char text[100];
-	char temp;
-
-	for (int i = 0; text[i] != '\0'; ++i) {
-		temp = text[i];
-		//If the message to be decypted is in lower case.
-		if (temp >= 'a' && temp <= 'z') {
-			temp = temp - 3;
-
-			if (temp < 'a') {
-				temp = temp + 'z' - 'a' + 1;
+	char ch;
+	for (int i = 0; token[i] != '\0'; ++i)
+	{
+		ch = token[i];
+		if (ch >= 'a' && ch <= 'z')
+		{
+			ch = ch - 3;
+			if (ch < 'a')
+			{
+				ch = ch + 'z' - 'a' + 1;
 			}
-
-			text[i] = temp;
+			token[i] = ch;
 		}
-		//If the message to be decypted is in upper case.
-		else if (temp >= 'A' && temp <= 'Z') {
-			temp = temp - 3;
 
-			if (temp < 'A') {
-				temp = temp + 'Z' - 'A' + 1;
+		else if (ch >= 'A' && ch <= 'Z')
+		{
+			ch = ch - 3;
+			if (ch < 'A')
+			{
+				ch = ch + 'Z' - 'A' + 1;
 			}
-
-			text[i] = temp;
+			token[i] = ch;
 		}
 	}
-
-	return token;
+	if (token == "alala")
+		return true;
+	else
+		return false;
 
 }
 
@@ -619,101 +619,122 @@ int main()
 					}
 					case 3://start level3
 					{
-						system("CLS");
 
+						system("CLS");
 						cout << "Emma and Daniel find themselves in prison...." << endl;
 						this_thread::sleep_for(chrono::seconds(5));
+						system("CLS");
 
 						cout << "According to the contents of the book, Daniel sees signs in that place and realizes that this is the place and now they are in the pit." << endl;
 						this_thread::sleep_for(chrono::seconds(5));
+						system("CLS");
 
 						cout << "A suspect approaches them and start talking to them:" << endl;
-
+						system("CLS");
 
 						system("Color 0A");
 						this_thread::sleep_for(chrono::seconds(5));
 						cout << "suspect:hey guys !" << endl;
+						system("CLS");
 
 						system("Color 04");
 						this_thread::sleep_for(chrono::seconds(5));
 						cout << "Emma: hi ...." << endl;
+						system("CLS");
 
 						system("Color 0A");
 						this_thread::sleep_for(chrono::seconds(5));
 						cout << "suspect:what brings you here ? " << endl;
+						system("CLS");
 
 						system("Color 04");
 						this_thread::sleep_for(chrono::seconds(5));
 						cout << "Emma:Do we know you?" << endl;
+						system("CLS");
 
 						system("Color 0A");
 						this_thread::sleep_for(chrono::seconds(5));
 						cout << "suspect: i dont think that's a good question . you can trust ,i realy mean it !!" << endl << "so go ahead. tell me your story ";
 						this_thread::sleep_for(chrono::seconds(5));
+						system("CLS");
 
 						cout << "Daniel and Emma told him their stories" << endl;
 						this_thread::sleep_for(chrono::seconds(5));
+						system("CLS");
 
 						cout << "Now it's emma's choice !!" << endl;
 						this_thread::sleep_for(chrono::seconds(5));
+						system("CLS");
 
-						int op_e;
-						cin >> op_e;
-						switch (op_e)
-						{
-						case 1://Admit that she is a spy
+						int op_e_a;
+						cin >> op_e_a;
+						if (op_e_a == 1)//Admit that she is a spy
 						{
 							//Go to the torture room
-							break;
+
 						}
-						case 2://She is a tourist and has come to this city for fun
+						else if (op_e_a == 2)//She is a tourist and has come to this city for fun
 						{
 							//Go to the test room
-							break;
+
 						}
-						break;
+						else
+						{
+							cout << "An error has occurred!";
+							return 0;
 						}
+
+
 
 						system("CLS");
 
-						cin >> op_e;
-						switch (op_e)
-						{
-						case 1://save daneil
+						int op_e_b;
+						cin >> op_e_b;
+
+						if (op_e_b == 1)
+							//save daneil
 						{
 							//She dies to save his life
 							int op_d;
-							cin >> op_d;
-
-							switch (op_d)//daneil choise
-							{
-							case 1:
+							cin >> op_d; //daneil choise
+							if (op_d == 1)
 							{
 								//Reach supernatural power
-								break;
 							}
-							case 2:
+							else if (op_d == 2)
 							{
 								//bring emma to life
-								break;
 							}
-							break;
+							else
+							{
+								cout << "An error has occurred!";
+								return 0;
 							}
-							system("CLS");
+
 						}
-						case 2://Do not save Daniel
+						else if (op_e_b == 2)//Do not save Daniel
 						{
 							//start the war with Nazis
-							break;
 						}
+						else
+						{
+							cout << "An error has occurred!";
+							return 0;
+						}
+
+
 
 						//enter token to open the alala's gate
 						string token;
 						cin >> token;
 
-						if (decryptfunc_token(token) == "alala")
+						if (decryptfunc_token(token) == true)
 							cout << "You won !";
-						break;
+						else
+							cout << "You lose :(";
+
+				
+					break;
 						}
 						break;
 					}
