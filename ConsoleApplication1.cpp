@@ -12,6 +12,8 @@ double co_d;//
 int mode;//in se khat baraye sakhti bazi
 
 class person {
+	template<typename t>//mrs:)
+	friend void operator-=(person &P,t mitigate);//mrs:)
 	template<typename T>//mrs:)
 	friend void decrease_m(T decrease_money,person&E,person&D);//mrs:)
 	template<typename T>//mrs:)
@@ -20,7 +22,7 @@ class person {
 	friend bool check_id(person &E,person &D,int id);//inja chon ba estefade az id mikhaim seekg anjam bedam mrs:)
 public:
 	
-	person(int gender,double health=10,double money=50):gender(gender){//gender ro kamel kardam va money ro ezafe kardam
+	person(int gender,double health=10,double money=50,int mode=1):gender(gender){//gender ro kamel kardam va money ro ezafe kardam *****//mode ro ezafe kardam mrs:)
 		this->health = health;
 		//id++;//pak kardam chon bedard nemikhore mrs:)
 		this->All_money=money;
@@ -54,6 +56,9 @@ public:
 	void set_id(int id){//baraye ghesmat new game ke id yeksan nashe mrs:)
 		this->id=id;
 	}
+	void set_mode(int mode){//baraye sakhti bazi mrs:)
+		this->mode=mode;//mrs:)
+	}
 	/*void de(){//alaki
 		health--;
 	}*/
@@ -77,7 +82,9 @@ private:
 	int id=0;// age shod ham static bezan ham gheir ta faghat ye id neveshte beshe mrs:)bara khodame shoma nadide begir:)
 	double health;
 	const int gender;//   ezafe shod mrs:)
+	int mode;//baraye halat sakhti va asoni bazi //mrs:)
 };
+
 //long int person::money = 1000;     hazf
 
 //person p1(1);//ba header call mikonim mrs:)
@@ -97,6 +104,15 @@ void Add_m(T Add_money,person&E,person&D)// be pool ezafe mikone ******header ro
 	D.All_money+=Add_money;//mrs:)
 }
 
+template<typename t>// mrs:)
+void operator-=(person &p,t mitigate){// baraye kam shodan jon mrs:)
+	if(p.mode==1)//mrs:)
+		p.health-=mitigate;//mrs:)
+	else //mrs:)
+		if(p.mode==2){//mrs:)
+			p.health-=(mitigate*1.5);//mrs:)
+		}//mrs:)
+}//mrs:)
 
 class weapon
 {
@@ -564,7 +580,7 @@ int main()
 
 				while(true)
 				{
-					cout << "what mode you want?!\n" << "1-hard\n" << "2-easy\n";
+					cout << "what mode you want?!\n" << "2.Easy\n" << "1.Hard\n" ;
 					cin >> mode;
 					system("cls");
 					if (!check(mode)) {
@@ -574,6 +590,8 @@ int main()
 					cout << "1-new game\n" << "2-continue\n";
 
 					cin >> marhale;
+					E.set_mode(marhale);//baraye ok kardan sakhti bazi mrs:)
+					D.set_mode(marhale);//baraye ok kardan sakhti bazi mrs:)
 					system("cls");
 					if (marhale == 2)
 					{
@@ -1259,8 +1277,13 @@ int main()
 
 			case 2:
 			{
-				cout << "1-mode" << endl << "2-audio" << endl;
+				cout << "1-mode" << endl << "2-audio" << endl;				
 				cin >> which;
+				if(which==1){//ezafe shod mrs:)
+					cout << "1-easy" << endl << "2-hard" << endl;	//ezafe shod mrs:)
+					cin>>mode;	//ezafe shod mrs:)
+							
+				}
 				break;
 			}
 			case 3:
