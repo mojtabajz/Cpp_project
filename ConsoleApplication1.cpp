@@ -663,7 +663,6 @@ int main()
 							}
 						}
 						system("cls");
-						calm_situation();
 		
 						this_thread::sleep_for(chrono::seconds(2));
 						cout << "After touring Myanmar and gathering information, Emma discovers Nazi activity in the forests of Bagan.\n" << " He goes there to do his mission." << endl;
@@ -672,7 +671,7 @@ int main()
 						this_thread::sleep_for(chrono::seconds(20));	
 	
 						cout << "So Emma went to her so that she could approach him and penetrate their position." << endl;
-						this_thread::sleep_for(chrono::seconds(2));
+						this_thread::sleep_for(chrono::seconds(6));
 						system("cls");	
 	
 	
