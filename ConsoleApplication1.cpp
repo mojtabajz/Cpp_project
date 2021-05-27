@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <thread>
 #include <chrono>
@@ -14,28 +14,26 @@ class person {
 	
 	friend void save_replace(person &E,person &D);//inja chon ba estefade az id mikhaim seekp anjam bedam mrs:)
 	friend bool check_id(person &E,person &D,int id);//inja chon ba estefade az id mikhaim seekg anjam bedam mrs:)
-	
-	//template<typename T>
-	friend void decrease(int, string, person&);
-	friend void SubLevel(int, string, person&);
-
 public:
-	person(int gender,double health=100,double money=1000):gender(gender){//gender ro kamel kardam va money ro ezafe kardam
+	
+	person(int gender,double health=10,double money=50):gender(gender){//gender ro kamel kardam va money ro ezafe kardam
 		this->health = health;
 		id++;
-		this->money=money;
+		this->All_money=money;
 		//if(gender==1)//agar in nabashe dobar id ro ziad mikone
 		//id++; bedard nemikhord mrs:)
 	}
-	void set(double money, double health) {
+	
+	/*void set(double money, double health) {
 		this->health = health;
 	};
 	void get()const {
-		cout << health << '\t' << money << '\t';
+		cout << health << '\t' << All_money << '\t';
 	}
-	/*static void mo(int moneyy) { chon static ro hazf kardam mrs:)
+	static void mo(int moneyy) { chon static ro hazf kardam mrs:)
 		money = moneyy;
 	}*/
+	
 	void print_information()const{//baraye fahmidan vaziat mrs:)
 		if(gender==1)
 			cout<<"Emma\n";
@@ -43,63 +41,56 @@ public:
 			cout<<"Daniel\n";
 		cout<<"your id is :"<<id<<endl;
 		cout<<"your health is :"<<health<<endl;
-		cout<<"your money is :"<<money<<endl;
+		cout<<"your money is :"<<All_money<< "$" <<endl;
 	}
+	
 	int get_id()const{//baraye malom kardan id mrs:)
 		return id;
 	}
 	void set_id(int id){//baraye ghesmat new game ke id yeksan nashe mrs:)
 		this->id=id;
 	}
-	void de(){//alaki
+	/*void de(){//alaki
 		health--;
-	}
-
-	/*template <typename T>  hazfe
-	static void mo(T moneyy)
-	{
-		money = moneyy;
 	}*/
+
+	template <typename T>
+	void d_m(T money)
+	{
+		All_money -= money;
+	}
+	
+	template <typename T>
+	void A_m(T money)
+	{
+		All_money += money;
+	}
 
 private:
 	//static long int money;	hazf shod mrs:)
-	double money; 
+	double All_money; 
 	int id=0;// age shod ham static bezan ham gheir ta faghat ye id neveshte beshe mrs:)bara khodame shoma nadide begir:)
 	double health;
 	const int gender;//   ezafe shod mrs:)
 };
 //long int person::money = 1000;     hazf
 
-template <typename T>
-void decrease(int coefficient, string which, person& pl)
-{
 
-	if (which == "h")
-	{
-		pl.health -= coefficient;
-	}
-	if (which == "m")
-	{
-		person::money -= coefficient;
-		person::mo(T money);
-	}
+template <typename T>
+void decrease_m(T decrease_money)// az pool kam mikone
+{
+	person p1(1);
+	p1.d_m(decrease_money);		
+}
+
+template <typename T>
+void Add_m(T Add_money)// be pool ezafe mikone
+{
+	person p1(1);
+	p1.A_m(Add_money);
 }
 
 
-template <typename T>
-void Add_money(int coefficient, string which, person& pl)
-{
-
-	if (which == "h")
-	{
-		pl.health += coefficient;
-	}
-	if (which == "m")
-	{
-		person::money += coefficient;
-		person::mo(T money);
-	}
-}
 
 class weapon
 {
@@ -161,7 +152,7 @@ void shop()
 
 			if (choise == 1)
 			{
-				cout << "It is a German shotgun weapon.\n" << "It has 5 bullets.\n" << "Baking time 53 seconds.\n" << "The price of this weapon is x$\n" << "0.Close\n" << "1.Buy this weapon\n";
+				cout << "It is a German shotgun weapon.\n" << "It has 5 bullets.\n" << "Baking time 53 seconds.\n" << "The price of this weapon is 15$\n" << "0.Close\n" << "1.Buy this weapon\n";
 				cin >> choise;
 				if (choise == 0)
 				{
@@ -169,7 +160,7 @@ void shop()
 				}
 				else if (choise == 1 && G1 == 0)
 				{
-					//price
+					decrease_m(15);
 
 					G2 = 0;
 					G3 = 0;
@@ -186,7 +177,7 @@ void shop()
 			}
 			else if (choise == 2)
 			{
-				cout << "It is a German semi-automatic weapon.\n" << "It has 10 bullets.\n" << "Baking time 79 seconds.\n" << "The price of this weapon is x\n" << "0.Close\n" << "1.Buy this weapon\n";
+				cout << "It is a German semi-automatic weapon.\n" << "It has 10 bullets.\n" << "Baking time 79 seconds.\n" << "The price of this weapon is 18.5$\n" << "0.Close\n" << "1.Buy this weapon\n";
 				cin >> choise;
 				if (choise == 0)
 				{
@@ -194,7 +185,7 @@ void shop()
 				}
 				else if (choise == 1 && G2 == 0)
 				{
-					//price
+					decrease_m(18.5);
 
 					G1 = 0;
 					G3 = 0;
@@ -211,7 +202,7 @@ void shop()
 			}
 			else if (choise == 3)
 			{
-				cout << "It is a German semi-automatic weapon.\n" << "It has 10 bullets.\n" << "Baking time 55 seconds.\n" << "The price of this weapon is x\n" << "0.Close\n" << "1.Buy this weapon\n";
+				cout << "It is a German semi-automatic weapon.\n" << "It has 10 bullets.\n" << "Baking time 55 seconds.\n" << "The price of this weapon is 20.5$\n" << "0.Close\n" << "1.Buy this weapon\n";
 				cin >> choise;
 				if (choise == 0)
 				{
@@ -219,7 +210,7 @@ void shop()
 				}
 				else if (choise == 1 && G3 == 0)
 				{
-					//price
+					decrease_m(20.5);
 
 					G1 = 0;
 					G2 = 0;
@@ -236,7 +227,7 @@ void shop()
 			}
 			else if (choise == 4)
 			{
-				cout << "It is a German semi-automatic weapon.\n" << "It has 13 bullets.\n" << "Baking time 50 seconds.\n" << "The price of this weapon is x\n" << "0.Close\n" << "1.Buy this weapon\n";
+				cout << "It is a German semi-automatic weapon.\n" << "It has 13 bullets.\n" << "Baking time 50 seconds.\n" << "The price of this weapon is 25$\n" << "0.Close\n" << "1.Buy this weapon\n";
 				cin >> choise;
 				if (choise == 0)
 				{
@@ -244,7 +235,7 @@ void shop()
 				}
 				else if (choise == 1 && G4 == 0)
 				{
-					//price
+					decrease_m(25);
 
 					G1 = 0;
 					G2 = 0;
@@ -268,7 +259,7 @@ void shop()
 
 			if (choise == 1)
 			{
-				cout << "A pack of 10 bullets of this weapon\n" << "The price of these bullets is n\n" << "0.Close\n" << "1.Buy this pack\n";
+				cout << "A pack of 10 bullets of this weapon\n" << "The price of these bullets is 5$\n" << "0.Close\n" << "1.Buy this pack\n";
 				cin >> choise;
 				if (choise == 0)
 				{
@@ -276,7 +267,7 @@ void shop()
 				}
 				else if (choise == 1 && G1 == 1)
 				{
-					//price
+					decrease_m(5);
 
 
 					Gun[0].All_bullets(10);
@@ -285,7 +276,7 @@ void shop()
 			}
 			else if (choise == 2)
 			{
-				cout << "A pack of 15 bullets of this weapon\n" << "The price of these bullets is n\n" << "0.Close\n" << "1.Buy this pack\n";
+				cout << "A pack of 15 bullets of this weapon\n" << "The price of these bullets is 9.5$\n" << "0.Close\n" << "1.Buy this pack\n";
 				cin >> choise;
 				if (choise == 0)
 				{
@@ -293,7 +284,7 @@ void shop()
 				}
 				else if (choise == 1 && G2 == 1)
 				{
-					//price
+					decrease_m(9.5);
 
 					Gun[1].All_bullets(15);
 
@@ -302,7 +293,7 @@ void shop()
 			}
 			else if (choise == 3)
 			{
-				cout << "A pack of 15 bullets of this weapon\n" << "The price of these bullets is n\n" << "0.Close\n" << "1.Buy this pack\n";
+				cout << "A pack of 15 bullets of this weapon\n" << "The price of these bullets is 9.5$\n" << "0.Close\n" << "1.Buy this pack\n";
 				cin >> choise;
 				if (choise == 0)
 				{
@@ -310,7 +301,7 @@ void shop()
 				}
 				else if (choise == 1 && G3 == 1)
 				{
-					//price
+					decrease_m(9.5);
 
 					Gun[2].All_bullets(15);
 
@@ -319,7 +310,7 @@ void shop()
 			}
 			else if (choise == 4)
 			{
-				cout << "A pack of 20 bullets of this weapon\n" << "The price of these bullets is n\n" << "0.Close\n" << "1.Buy this pack\n";
+				cout << "A pack of 20 bullets of this weapon\n" << "The price of these bullets is 15$\n" << "0.Close\n" << "1.Buy this pack\n";
 				cin >> choise;
 				if (choise == 0)
 				{
@@ -327,7 +318,7 @@ void shop()
 				}
 				else if (choise == 1 && G4 == 1)
 				{
-					//price
+					decrease_m(15);
 
 					Gun[3].All_bullets(20);
 
@@ -337,7 +328,7 @@ void shop()
 		}
 		while (choise == 3)
 		{
-			cout << "0.Close\n" << "1.Bandage n$ (Adds 1 unit to health)\n" << "2.Patch n$ (Adds 0.5 unit to health)\n" << "3.Vitamin n$ (Adds 1.5 unit to health)\n";
+			cout << "0.Close\n" << "1.Bandage 10$ (Adds 1 unit to health)\n" << "2.Patch 5$ (Adds 0.5 unit to health)\n" << "3.Vitamin 15$ (Adds 1.5 unit to health)\n";
 			cin >> choise;
 
 			if (choise == 0)
@@ -346,17 +337,17 @@ void shop()
 			}
 			else if (choise == 1)
 			{
-				//price
+				decrease_m(10);
 				//health
 			}
 			else if (choise == 2)
 			{
-				//price
+				decrease_m(5);
 				//health
 			}
 			else if (choise == 3)
 			{
-				//price
+				decrease_m(15);
 				//health
 			}
 		}
