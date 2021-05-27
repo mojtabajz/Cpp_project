@@ -593,16 +593,22 @@ template <typename T>
 void SubLevel(T cash,T h,person& E,person& D)//start sublevel 
 {
 
-	system("CLS");
-	cout << "They see the bear's paw" << endl;
-	this_thread::sleep_for(chrono::seconds(2));
-	system("CLS");
-	cout << "Since they have no food, they decide to hunt the bear" << endl;
-	this_thread::sleep_for(chrono::seconds(2));
-	system("CLS");
-	cout << "This adds to their health and the number of bullets" << endl;
-	this_thread::sleep_for(chrono::seconds(2));
-	system("CLS");
+	cout << "They follow in the footsteps of the bear to reach a plain." << endl;
+	this_thread::sleep_for(chrono::seconds(6));
+	cout << "They see a black bear sitting on the ground." << endl;
+	this_thread::sleep_for(chrono::seconds(5));
+	cout << "Emma draws her gun and points it at the bear." << endl;
+	this_thread::sleep_for(chrono::seconds(5));
+	cout << "He kills the bear with just one bullet." << endl;
+	decreas_bullet(1);
+	this_thread::sleep_for(chrono::seconds(4));
+	
+	cout << "They go to the city and sell the bear." << endl;
+	this_thread::sleep_for(chrono::seconds(4));
+	cout << "They eat with some of that money." << endl;
+	this_thread::sleep_for(chrono::seconds(4));
+	cout << "They return to the forest and continue on their way." << endl;
+	this_thread::sleep_for(chrono::seconds(8));
 
 
 	E += h;
