@@ -65,7 +65,8 @@ public:
 	{
 		All_money += money;
 	}
-
+	
+	
 private:
 	//static long int money;	hazf shod mrs:)
 	double All_money; 
@@ -75,18 +76,16 @@ private:
 };
 //long int person::money = 1000;     hazf
 
-
+person p1(1);
 template <typename T>
 void decrease_m(T decrease_money)// az pool kam mikone
 {
-	person p1(1);
 	p1.d_m(decrease_money);		
 }
 
 template <typename T>
 void Add_m(T Add_money)// be pool ezafe mikone
 {
-	person p1(1);
 	p1.A_m(Add_money);
 }
 
@@ -354,6 +353,7 @@ void shop()
 				//health
 			}
 		}
+		system("cls");
 	}
 }
 
@@ -384,6 +384,7 @@ void calm_situation()// to mogheiat hahe arom continue,status,shop,Auto save
 {
 	int choise;
 	cout << "1.continue" << endl << "2.shop" << endl << "3.status" << endl;
+	cin >> choise;
 	if(choise == 1)
 	{
 		return ;
@@ -395,7 +396,9 @@ void calm_situation()// to mogheiat hahe arom continue,status,shop,Auto save
 	}
 	else if(choise == 3)
 	{
-		//person.print_informattion();
+		p1.print_information();
+		this_thread::sleep_for(chrono::seconds(5));
+		system("cls");
 		return ;
 	}
 }
@@ -566,6 +569,7 @@ int main()
 					cout << "1-new game\n" << "2-continue\n";
 
 					cin >> marhale;
+					system("cls");
 					if (marhale == 2)
 					{
 						//saver >> marhale>>money>>health;		hazf				
@@ -598,10 +602,10 @@ int main()
 						save_append(E,D);
 
 						E.print_information();
-						this_thread::sleep_for(chrono::seconds(8));
+						this_thread::sleep_for(chrono::seconds(5));
 						system("cls");
 						D.print_information();
-						this_thread::sleep_for(chrono::seconds(8));
+						this_thread::sleep_for(chrono::seconds(5));
 						system("cls");
 					}
 					break;
@@ -659,6 +663,7 @@ int main()
 							}
 						}
 						system("cls");
+						calm_situation();
 		
 						this_thread::sleep_for(chrono::seconds(2));
 						cout << "After touring Myanmar and gathering information, Emma discovers Nazi activity in the forests of Bagan.\n" << " He goes there to do his mission." << endl;
