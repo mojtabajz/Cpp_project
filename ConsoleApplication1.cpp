@@ -141,6 +141,7 @@ void shop()
 	{
 		cout << "0.Close" << endl << "1.Gun" << endl << "2.Bullet" << endl << "3.Health" << endl;
 		cin >> choise;
+		system("cls");
 		if (choise == 0)
 		{
 			return;
@@ -149,7 +150,7 @@ void shop()
 		{
 			cout << "0.Close" << endl << "1.Karabiner 98K" << endl << "2.Gewehr 41" << endl << "3.Gewehr 43" << endl << "4.Volkssturmgewehr" << endl;
 			cin >> choise;
-
+			system("cls");
 			if (choise == 1)
 			{
 				cout << "It is a German shotgun weapon.\n" << "It has 5 bullets.\n" << "Baking time 53 seconds.\n" << "The price of this weapon is 15$\n" << "0.Close\n" << "1.Buy this weapon\n";
@@ -256,6 +257,7 @@ void shop()
 		{
 			cout << "0.Close" << endl << "1.Karabiner 98K" << endl << "2.Gewehr 41" << endl << "3.Gewehr 43" << endl << "4.Volkssturmgewehr" << endl;
 			cin >> choise;
+			system("cls");
 
 			if (choise == 1)
 			{
@@ -330,6 +332,7 @@ void shop()
 		{
 			cout << "0.Close\n" << "1.Bandage 10$ (Adds 1 unit to health)\n" << "2.Patch 5$ (Adds 0.5 unit to health)\n" << "3.Vitamin 15$ (Adds 1.5 unit to health)\n";
 			cin >> choise;
+			system("cls");
 
 			if (choise == 0)
 			{
@@ -589,11 +592,17 @@ int main()
 					{
 						set_id(test);
 						E.set_id(test.get_id()+1);
+						
 						D.set_id(test.get_id()+1);
+						
 						save_append(E,D);
 
 						E.print_information();
+						this_thread::sleep_for(chrono::seconds(8));
+						system("cls");
 						D.print_information();
+						this_thread::sleep_for(chrono::seconds(8));
+						system("cls");
 					}
 					break;
 				}
@@ -642,12 +651,14 @@ int main()
 						while (true)
 						{
 							shop();
+							system("cls");
 							if (G1 > 0 || G2 > 0 || G3 > 0 || G4 > 0)
 							{
 								cout << "It was a good choice." << endl;
 								break;
 							}
 						}
+						system("cls");
 		
 						this_thread::sleep_for(chrono::seconds(2));
 						cout << "After touring Myanmar and gathering information, Emma discovers Nazi activity in the forests of Bagan.\n" << " He goes there to do his mission." << endl;
