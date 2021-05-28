@@ -68,6 +68,13 @@ public:
 	void set_mode(int mode){//baraye sakhti bazi mrs:)
 		this->mode=mode;//mrs:)
 	}
+	
+	void set_marhale(int marhale){//baraye marahele mrs:)
+		this->marhale=marhale;//baraye marahele mrs:)
+	}
+	int get_marhale()const{//baraye marahele mrs:)
+		return marhale;//baraye marahele mrs:)
+	}
 	/*void de(){//alaki
 		health--;
 	}*/
@@ -99,6 +106,7 @@ private:
 	double health;
 	const int gender;//   ezafe shod mrs:)
 	int mode;//baraye halat sakhti va asoni bazi //mrs:)
+	int marhale=0;//barye inke befahmim kodom marhale hast mrs:)
 };
 
 //long int person::money = 1000;     hazf
@@ -160,6 +168,7 @@ private:
 	int size_bullet;
 	//int per_click;  delete
 };
+
 bool check(int mode) {
 	if (mode != 1 || mode != 2)
 		return true;
@@ -426,9 +435,9 @@ void decreas_bullet(int BULLET)
 
 
 //void status()// tedad kole tir/tedad tir baghi monde , mizan salamati , meghdar pool
-
+void save_replace(person&,person&);//header file ke nashenakhte nabashe mrs:)
 void calm_situation(person& E, person& D)// to mogheiat hahe arom continue,status,shop,Auto save
-{
+{	
 	while(true)
 	{
 		int choise;
@@ -437,6 +446,7 @@ void calm_situation(person& E, person& D)// to mogheiat hahe arom continue,statu
 		system("cls");
 		if(choise == 1)
 		{
+			save_replace(E,D);
 			return ;
 		}
 		else if(choise == 2)
@@ -515,22 +525,22 @@ void save_append(person &E,person &D){
 
 //in tabe baraye mavaghei hast ke mikhaim etelaat ro be roz  konim  mrs:)
 void save_replace(person &E,person &D) {
-	ofstream  osave("save_E.txt", ios::binary);
+	ofstream  osave("save_E.txt", ios::binary|ios::in|ios::out);//taghir mohem baraye inke beshe az halat update estefade kard mrs:)
 	if (!osave) {
 		cerr << "cant2";
 		exit(0);
 	}			
-		osave.seekp(E.id*sizeof(person));
+		osave.seekp((E.id)*sizeof(person));//mrs:)
 		osave.write(reinterpret_cast<const char*>(&E), sizeof(person));
 		osave.close();
 
 
-	ofstream  osavee("save_D.txt", ios::binary);
+	ofstream  osavee("save_D.txt", ios::binary|ios::in|ios::out);//taghir mohem baraye inke beshe az halat update estefade kard mrs:)
 	if (!osavee) {
 		cerr << "cant2";
 		exit(0);
 	}			
-		osavee.seekp(D.id*sizeof(person));
+		osavee.seekp((D.id)*sizeof(person));//mrs:)
 		osavee.write(reinterpret_cast<const char*>(&D), sizeof(person));
 		osavee.close();
 }
@@ -574,11 +584,11 @@ bool check_id(person &E,person &D,int id){
 	}
 }
 
-void set_id(person &copy){//baraye ok kardan ghesmat new game  mrs:)
+bool set_id(person &copy){//baraye ok kardan ghesmat new game  mrs:)
 	ifstream check("save_E.txt", ios::in);
 	if (!check) {
-		cerr << "file save peyda nashod \n ";
-
+		//cerr << "file save peyda nashod \n "; hazf shod bedard nemikhord mrs:)
+		return false;//baraye inke be id 1 ro ezafe nakone mrs:)
 	}	
 	else{
 		check.seekg(-1*sizeof(person),ios::end);		
@@ -587,6 +597,7 @@ void set_id(person &copy){//baraye ok kardan ghesmat new game  mrs:)
 		sizeof(person));		
 	check.close();
 	}
+	return true;//baraye inke yek ro ezafe kone mrs:)
 }
 
 template <typename T>
@@ -628,7 +639,7 @@ int main()
 	{
 		
 		system("cls");
-		cout << "1-play" << endl << "2-setting" << endl << "3-shop" << endl;
+		cout << "1.Play" << endl << "2.Setting" << endl << "3.Shop" << endl;
 		cin >> menu;
 		system("cls");
 		switch (menu)
@@ -648,8 +659,8 @@ int main()
 					cout << "1.new game\n" << "2.continue\n";
 
 					cin >> marhale;
-					E.set_mode(marhale);//baraye ok kardan sakhti bazi mrs:)
-					D.set_mode(marhale);//baraye ok kardan sakhti bazi mrs:)
+					E.set_mode(mode);//baraye ok kardan sakhti bazi mrs:)*****taghir dadam mrs:)
+					D.set_mode(mode);//baraye ok kardan sakhti bazi mrs:)*****taghir dadam mrs:)
 					system("cls");
 					if (marhale == 2)
 					{
@@ -664,24 +675,30 @@ int main()
 								this_thread::sleep_for(chrono::seconds(4));
 								D.print_information();
 								this_thread::sleep_for(chrono::seconds(4));
+								E.set_mode(mode);//ezafe shod baraye taghir sakhti bazi mrs:)
+								D.set_mode(mode);//ezafe shod baraye taghir sakhti bazi mrs:)
 								break;
 							}
 							else{
 								cout<<"try again :( \n";
 							}
 						}
-						
+						marhale=E.get_marhale();//befahme az kodom marhale shoro kone mrs:)
 						//saver >> marhale >> money >> health;
 						//pl.set();
 						//saver.close();  hazf
 					}
 					else if(marhale == 1)
 					{
-						set_id(test);
+						if(set_id(test)){//taghiresh dadam mrs:)
 						E.set_id(test.get_id()+1);
 						
 						D.set_id(test.get_id()+1);
-						
+						}
+						else{//mrs:)
+							E.set_id(test.get_id());//mrs:)
+							D.set_id(test.get_id());//mrs:)
+						}
 						save_append(E,D);
 
 						E.print_information();
@@ -1365,12 +1382,26 @@ int main()
 
 			case 2:
 			{
-				cout << "1-mode" << endl << "2-audio" << endl;				
+				cout << "1.mode" << endl << "2.audio" << endl;				
 				cin >> which;
 				if(which==1){//ezafe shod mrs:)
-					cout << "1-easy" << endl << "2-hard" << endl;	//ezafe shod mrs:)
+					cout << "1.easy" << endl << "2.hard" << endl;	//ezafe shod mrs:)
 					cin>>mode;	//ezafe shod mrs:)
+					cout<<"please input your id \n";//ezafe kardan ghesmat continue mrs:)
+						while(true){//ezafe shod mrs:)
+							cin>>id;//ezafe shod mrs:)
+							if(check_id(E,D,id)){//ezafe shod mrs:)
 							
+								cout<<"loading succesful:)\n ";//ezafe shod mrs:)								
+								E.set_mode(mode);//ezafe shod baraye taghir sakhti bazi mrs:)
+								D.set_mode(mode);//ezafe shod baraye taghir sakhti bazi mrs:)
+								break;//ezafe shod mrs:)
+							}
+							else{//ezafe shod mrs:)
+								cout<<"try again :( \n";//ezafe shod mrs:)
+							}//ezafe shod mrs:)
+							
+						}//ezafe shod mrs:)
 				}
 				break;
 			}
