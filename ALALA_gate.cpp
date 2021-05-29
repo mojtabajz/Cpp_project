@@ -809,8 +809,11 @@ void SubLevel(T cash,T h,person& E,person& D)//start sublevel
 	this_thread::sleep_for(chrono::seconds(6));
 	cout << "They see a black bear sitting on the ground." << endl;
 	this_thread::sleep_for(chrono::seconds(5));
-	cout<<"you want 1 bullets \n";
-	decreas_bullet(1,E);//*************************************************************************
+	cout<<"you want 1 bullets \n";//ezafe shod mrs:)
+	
+	if(!decreas_bullet(1,E))//*******************************************************
+		  exit(0);
+		  
 	cout << "Emma draws her gun and points it at the bear." << endl;
 	this_thread::sleep_for(chrono::seconds(5));
 	cout << "He kills the bear with just one bullet." << endl;
@@ -1022,7 +1025,7 @@ int main()
 								if (choise == 1)
 								{
 									cout<<"you want 3 bullets \n";
-									if(!decreas_bullet(3,E));//****************************************************************************
+									if(!decreas_bullet(3,E))//****************************************************************************
 									    exit(0);
 									cout << "Emma fires three bullets at the Nazis and kills two of them" << endl;
 									this_thread::sleep_for(chrono::seconds(5));
@@ -1121,7 +1124,7 @@ int main()
 												if (choise == 1)
 												{
 													cout<<"you want 1 bullets \n";//ezafe shod mrs:)
-													if(!decreas_bullet(1,E));//*******************************************************
+													if(!decreas_bullet(1,E))//*******************************************************
 													   exit(0);
 													cout << "Daniel throws a stone at the Nazi soldier." << endl;
 													this_thread::sleep_for(chrono::seconds(3));
@@ -1305,7 +1308,7 @@ int main()
 										if(choise == 1)
 										{	
 											cout<<"you want 5 bullets \n";//ezafe shod mrs:)
-											if(decreas_bullet(5,E));//**************************************************************************************************
+											if(decreas_bullet(5,E))//**************************************************************************************************
 											   exit(0);
 											cout << "Emma shoots at them to kill them, but realizes that the bullets have no effect." << endl;
 											this_thread::sleep_for(chrono::seconds(8));
