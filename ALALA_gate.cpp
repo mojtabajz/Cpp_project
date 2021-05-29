@@ -11,6 +11,18 @@ int co_i;//
 double co_d;//
 int mode;//in se khat baraye sakhti bazi
 
+bool audio(int on_off){//ezafe shod mrs:)
+	static int music=false;
+	if(on_off==1)
+		music=true;
+	else
+		if(on_off==0)
+		{
+		music=false;
+		}
+	return music;
+}
+
 class weapon
 {
 	friend class person;
@@ -23,8 +35,8 @@ public:
 	{
 		this->size_bullet = size_bullet;
 	}
-
-	bool de_sb(int per_click) {//***********taghir dadam mrs:)
+	
+	bool de_sb(int per_click) {//*****taghir dadam mrs:)
 		
 		if(size_bullet - per_click>=0){
 			size_bullet -= per_click;
@@ -33,7 +45,19 @@ public:
 		
 		else{
 			system("Color 04");
-			cout<<"you will die :)))))))))by by";
+			cout<<"you will die :)))))))))by by ";
+			if(audio(5)==true)//ezafe shod mrs:))
+			{
+				cout<<"\a ";	
+				this_thread::sleep_for(chrono::milliseconds(500));
+				cout<<"\a ";
+				this_thread::sleep_for(chrono::milliseconds(500));
+				cout<<"\a ";
+				this_thread::sleep_for(chrono::milliseconds(500));
+				cout<<"\a ";
+				this_thread::sleep_for(chrono::milliseconds(500));
+				cout<<"\a ";
+			}
 			this_thread::sleep_for(chrono::seconds(3));
 			system("Color 0f");
 			return 0;
@@ -205,22 +229,48 @@ public:
 	}
 	void print_bullet(){//fahmidan tajhizat mrs:)
 		if(kar.have==1){
-			cout<<"all bullet: "<<kar.all_bullets;
-			cout<<"size bullet: "<<kar.size_bullet;
+			//cout<<"all bullet: "<<kar.all_bullets;
+			//cout<<"size bullet: "<<kar.size_bullet;
+			cout << kar.all_bullets << "/" << kar.size_bullet << endl;//mojtaba
 		}
 		if(gew41.have==1){
-			cout<<"all bullet: "<<gew41.all_bullets;
-			cout<<"size bullet: "<<gew41.size_bullet;
+			//cout<<"all bullet: "<<gew41.all_bullets;
+			//cout<<"size bullet: "<<gew41.size_bullet;
+			cout << kar.all_bullets << "/" << kar.size_bullet << endl;//mojtaba
+
 		}
 		if(gew43.have==1){
-			cout<<"all bullet: "<<gew43.all_bullets;
-			cout<<"size bullet: "<<gew43.size_bullet;
+			//cout<<"all bullet: "<<gew41.all_bullets;
+			//cout<<"size bullet: "<<gew41.size_bullet;
+			cout << kar.all_bullets << "/" << kar.size_bullet << endl;//mojtaba
 		}
 		if(vol.have==1){
-			cout<<"all bullet: "<<vol.all_bullets;
-			cout<<"size bullet: "<<vol.size_bullet;
+			//cout<<"all bullet: "<<gew41.all_bullets;
+			//cout<<"size bullet: "<<gew41.size_bullet;
+			cout << kar.all_bullets << "/" << kar.size_bullet << endl;//mojtaba
 		}
+	}	
+	
+	bool kar_gun(){
+		if(kar.have==1)
+			return 1;
 	}
+	
+	bool gew41_gun(){
+		if(gew41.have==1)
+			return 1;
+	}
+	
+	bool gew43_gun(){
+		if(gew43.have==1)
+			return 1;
+	}
+	
+	bool vol_gun(){
+		if(vol.have==1)
+			return 1;
+	}
+	
 private:
 	//static long int money;	hazf shod mrs:)
 	double All_money; 
@@ -514,12 +564,15 @@ void shop(person& E, person& D)
 bool decreas_bullet(int BULLET,person &E)//**********************inja taghirati anjam dadam mrs:)
 {
 	
-	cout << "1.Karabiner 98K" << endl << "2.Gewehr 41" << endl << "3.Gewehr 43" << endl << "4.Volkssturmgewehr" << endl;
-	while(true){			
+	//cout << "1.Karabiner 98K" << endl << "2.Gewehr 41" << endl << "3.Gewehr 43" << endl << "4.Volkssturmgewehr" << endl;
+	while(true){		
 		if(E.kar.havee() == 1)//taghir dadam mrs:)
 		{
 			if(E.kar.de_sb(BULLET))
+			{	
+				E.print_bullet();
 				return true;
+			}
 			else{
 				return 0;
 				cout<<"can not";
@@ -529,7 +582,10 @@ bool decreas_bullet(int BULLET,person &E)//**********************inja taghirati 
 		else if(E.gew41.havee() == 1)//taghir dadam mrs:)
 		{
 			if(E.gew41.de_sb(BULLET))
+			{	
+				E.print_bullet();
 				return true;
+			}
 			else{
 				return 0;
 			}
@@ -537,8 +593,11 @@ bool decreas_bullet(int BULLET,person &E)//**********************inja taghirati 
 		
 		else if(E.gew43.havee() == 1)//taghir dadam mrs:)
 		{
-		if(E.gew43.de_sb(BULLET))
+			if(E.gew43.de_sb(BULLET))
+			{	
+				E.print_bullet();
 				return true;
+			}
 			else{
 				return 0;
 			}
@@ -547,7 +606,10 @@ bool decreas_bullet(int BULLET,person &E)//**********************inja taghirati 
 		else if(E.vol.havee()==1)//taghir dadam mrs:)
 		{
 			if(E.vol.de_sb(BULLET))
+			{	
+				E.print_bullet();
 				return true;
+			}
 			else{
 				return 0;
 			}
@@ -579,12 +641,13 @@ void calm_situation(person& E, person& D)// to mogheiat hahe arom continue,statu
 		}
 		else if(choise == 3)
 		{
-			E.print_information();
+			E.print_information();			
+			E.print_bullet();
 			this_thread::sleep_for(chrono::seconds(5));
 			D.print_information();
-			this_thread::sleep_for(chrono::seconds(5));
+			this_thread::sleep_for(chrono::seconds(5));			
+				
 			system("cls");
-			E.print_bullet();
 			
 		}
 		else 
@@ -789,7 +852,7 @@ int main()
 	{
 		int checkpoint=0;
 		system("cls");
-		cout << "1.Play" << endl << "2.Setting" << endl << "3.Shop" << endl;
+		cout << "1.Play" << endl << "2.Setting" << endl;
 		cin >> menu;
 		system("cls");
 		switch (menu)
@@ -900,6 +963,13 @@ int main()
 									system("cls");
 									break;
 								}
+								else
+								{
+									system("cls");
+									cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
+									this_thread::sleep_for(chrono::seconds(6));
+									system("cls");
+								}
 							}	
 							system("color 0f");
 							cout << "Emma travels to Myanmar alone and first enters a secret shop to buy weapons." << endl;
@@ -909,7 +979,7 @@ int main()
 							{
 								shop(E,D);
 								system("cls");
-								if (G1 > 0 || G2 > 0 || G3 > 0 || G4 > 0)
+								if (E.kar_gun()==true ||E.gew41_gun()==1 || E.gew43_gun()==1|| E.vol_gun()== 1)
 								{
 									cout << "It was a good choice." << endl;
 									break;
@@ -956,7 +1026,8 @@ int main()
 									    exit(0);
 									cout << "Emma fires three bullets at the Nazis and kills two of them" << endl;
 									this_thread::sleep_for(chrono::seconds(5));
-									
+									//print_bullet();
+																	
 									cout << "Then Emma runs away" << endl;
 									this_thread::sleep_for(chrono::seconds(2));
 									cout << "The Nazis chase after them and shoot at them.\n";
@@ -991,6 +1062,13 @@ int main()
 											cout << "They swim in the river and the Nazis lose them." << endl;
 											this_thread::sleep_for(chrono::seconds(4));
 											break;
+										}
+										else
+										{
+											system("cls");
+											cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
+											this_thread::sleep_for(chrono::seconds(6));
+											system("cls");
 										}
 									}
 									break;
@@ -1060,6 +1138,13 @@ int main()
 													this_thread::sleep_for(chrono::seconds(6));
 													break;
 												}
+												else
+												{
+													system("cls");
+													cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
+													this_thread::sleep_for(chrono::seconds(6));
+													system("cls");
+												}
 											}
 											break;
 										}
@@ -1069,10 +1154,24 @@ int main()
 											this_thread::sleep_for(chrono::seconds(3));
 											break;
 										}
+										else
+										{
+											system("cls");
+											cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
+											this_thread::sleep_for(chrono::seconds(6));
+											system("cls");
+										}
 										
 									}
 									system("cls");
 									break;
+								}
+								else
+								{
+									system("cls");
+									cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
+									this_thread::sleep_for(chrono::seconds(6));
+									system("cls");
 								}
 							}
 							system("cls");
@@ -1182,6 +1281,13 @@ int main()
 										{
 											break;
 										}
+										else
+										{
+											system("cls");
+											cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
+											this_thread::sleep_for(chrono::seconds(6));
+											system("cls");
+										}
 												
 									}
 											
@@ -1209,6 +1315,13 @@ int main()
 										{
 											break;
 										}
+										else
+										{
+											system("cls");
+											cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
+											this_thread::sleep_for(chrono::seconds(6));
+											system("cls");
+										}
 									}
 									cout << "They hurt Emma and Daniel and then let them go." << endl;
 									this_thread::sleep_for(chrono::seconds(5));
@@ -1221,6 +1334,13 @@ int main()
 									this_thread::sleep_for(chrono::seconds(10));
 											
 									break;
+								}
+								else
+								{
+									system("cls");
+									cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
+									this_thread::sleep_for(chrono::seconds(6));
+									system("cls");
 								}
 									
 							}
@@ -1309,9 +1429,23 @@ int main()
 												
 										break;
 									}
+									else
+									{
+										system("cls");
+										cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
+										this_thread::sleep_for(chrono::seconds(6));
+										system("cls");
+									}
 											
 									break;
-								}	
+								}
+								else
+								{
+									system("cls");
+									cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
+									this_thread::sleep_for(chrono::seconds(6));
+									system("cls");
+								}
 							}
 							system("cls");
 							
@@ -1429,8 +1563,10 @@ int main()
 							}
 							else
 							{
-								cout << "An error has occurred!";		
-	
+								system("cls");
+								cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
+								this_thread::sleep_for(chrono::seconds(6));
+								system("cls");
 							}
 						}
 						system("CLS");
@@ -1530,8 +1666,9 @@ int main()
 											}
 											else
 											{
-												cout << "An error has occurred!";
-												this_thread::sleep_for(chrono::seconds(3));
+												system("cls");
+												cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
+												this_thread::sleep_for(chrono::seconds(6));
 												system("cls");
 											}
 			
@@ -1555,8 +1692,9 @@ int main()
 									}
 									else
 									{
-										cout << "An error has occurred!";
-										this_thread::sleep_for(chrono::seconds(3));
+										system("cls");
+										cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
+										this_thread::sleep_for(chrono::seconds(6));
 										system("cls");
 									}
 								}
@@ -1600,11 +1738,13 @@ int main()
 							
 						}//ezafe shod mrs:)
 				}
-				break;
-			}
-			case 3:
-			{
-				shop(E,D);
+				else if(which==2)//ezafe shod mrs:)
+				{
+					int i=0;
+					cout<<"1.off \t"<<"2.on\n";
+					cin>>i;
+					audio(i);
+				}
 				break;
 			}
 		}
