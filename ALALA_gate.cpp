@@ -83,7 +83,7 @@ public:
 			return true;
 		}						
 		else{
-			cout<<"you don`t have money :(( \n";
+			cout<<"you don`t have bullet :(( \n";
 			return 0;
 		}
 	}
