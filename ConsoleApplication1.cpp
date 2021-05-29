@@ -6,18 +6,99 @@
 #include <windows.h>  
 
 using namespace std;
-
+class person;
 int co_i;//
 double co_d;//
 int mode;//in se khat baraye sakhti bazi
 
+class weapon
+{
+	friend class person;
+	friend void calm_situation(person& E, person& D);
+	//void decreas_bullet(int BULLET,person &E);
+	//friend void shop(person&,person&);//taghir dadam mrs:)
+public:
+
+	weapon(int size_bullet, int reload,int size_kheshab) :reload_time(reload),size_kheshab(size_kheshab)
+	{
+		this->size_bullet = size_bullet;
+	}
+
+	bool de_sb(int per_click) {//***********taghir dadam mrs:)
+		
+		if(size_bullet - per_click>=0){
+			size_bullet -= per_click;
+			return 1;			
+		}
+		
+		else{
+			system("Color 04");
+			cout<<"you will die :)))))))))by by";
+			this_thread::sleep_for(chrono::seconds(3));
+			system("Color 0f");
+			return 0;
+		}
+		
+	}
+	
+	bool func_reload(){//amaliat reload mrs:)
+		
+		if(all_bullets>0)
+		{
+			while(true)
+			{
+				if(all_bullets!=0&&size_bullet!=size_kheshab)
+				{
+					all_bullets--;
+					size_bullet++;
+				}
+				else
+					break;
+				
+			}	
+			return true;
+		}						
+		else{
+			cout<<"you don`t have money :(( \n";
+			return 0;
+		}
+	}
+	void All_bullets(int Bought_bullets)
+	{
+		all_bullets += Bought_bullets;
+	}
+	bool havee(){//ezafe shod mrs:)
+		return have;
+	}
+private:
+	const int reload_time;//time of baking
+	bool have=0;
+	int all_bullets;
+	int size_bullet;
+	const int size_kheshab;//ezafe shod mrs:)
+	//int per_click;  delete
+};
+
+weapon Karabiner_98K(5, 53,5);
+weapon Gewehr_41(10, 79,10);
+weapon Gewehr_43(10, 55,10);
+weapon Volkssturmgewehr(13, 50,13);
+
+weapon Gun[4] = { Karabiner_98K , Gewehr_41 , Gewehr_43 , Volkssturmgewehr };
+int G1 = 0, G2 = 0, G3 = 0, G4 = 0;//entekhab selah faghat yek bar baraye shop
+
 class person {
+	friend void calm_situation(person& E, person& D);
+	friend void shop(person&,person&);
+	friend bool decreas_bullet(int BULLET,person &E);
+	friend void save_checkpoint(int checkpoint,person&E,person&D);//baraye save kodom checkpoint mrs:)
 	template<typename T>
 	friend void SubLevel(T cash,T h,person& E,person& D);
 	
 	template<typename t>// mrs:)
 	friend void operator+=(person &p,t increase);//mrs:)
-	
+
+
 	template<typename t>//mrs:)
 	friend void operator-=(person &P,t mitigate);//mrs:)
 	
@@ -31,7 +112,7 @@ class person {
 	friend bool check_id(person &E,person &D,int id);//inja chon ba estefade az id mikhaim seekg anjam bedam mrs:)
 public:
 	
-	person(int gender,double health=10,double money=50,int mode=1):gender(gender){//gender ro kamel kardam va money ro ezafe kardam *****//mode ro ezafe kardam mrs:)
+	person(int gender,weapon g1,weapon g2,weapon g3,weapon g4,double health=10,double money=50,int mode=1):kar(g1),gew41(g2),gew43(g3),vol(g4),gender(gender){//gender ro kamel kardam va money ro ezafe kardam *****//mode ro ezafe kardam mrs:)
 		this->health = health;
 		//id++;//pak kardam chon bedard nemikhore mrs:)
 		this->All_money=money;
@@ -75,6 +156,10 @@ public:
 	int get_marhale()const{//baraye marahele mrs:)
 		return marhale;//baraye marahele mrs:)
 	}
+	int get_checkpoint(){//mrs:)
+		return checkpoint;
+	}
+	
 	/*void de(){//alaki
 		health--;
 	}*/
@@ -98,7 +183,44 @@ public:
 		baghi_poool = All_money - roket;
 		return baghi_poool;
 	}
-	
+	void have_gun(int which){//baraye equip gun mrs:)
+		if(which==1)
+			kar.have=1;
+		else
+			kar.have=0;
+		if(which==2)
+			gew41.have=1;
+		else
+			gew41.have=0;
+			
+		if(which==3)
+			gew43.have=1;
+		else
+			gew43.have=0;
+			
+		if(which==4)
+			vol.have=1;
+		else
+			vol.have=0;
+	}
+	void print_bullet(){//fahmidan tajhizat mrs:)
+		if(kar.have==1){
+			cout<<"all bullet: "<<kar.all_bullets;
+			cout<<"size bullet: "<<kar.size_bullet;
+		}
+		if(gew41.have==1){
+			cout<<"all bullet: "<<gew41.all_bullets;
+			cout<<"size bullet: "<<gew41.size_bullet;
+		}
+		if(gew43.have==1){
+			cout<<"all bullet: "<<gew43.all_bullets;
+			cout<<"size bullet: "<<gew43.size_bullet;
+		}
+		if(vol.have==1){
+			cout<<"all bullet: "<<vol.all_bullets;
+			cout<<"size bullet: "<<vol.size_bullet;
+		}
+	}
 private:
 	//static long int money;	hazf shod mrs:)
 	double All_money; 
@@ -106,7 +228,13 @@ private:
 	double health;
 	const int gender;//   ezafe shod mrs:)
 	int mode;//baraye halat sakhti va asoni bazi //mrs:)
-	int marhale=0;//barye inke befahmim kodom marhale hast mrs:)
+	int marhale=1;//barye inke befahmim kodom marhale hast mrs:)//taghir dadam be yek chon az yek shoro mishe mrs:)
+	int checkpoint=0;//baraye malom shodan ke dar kojaye bazi hast mrs:)
+	weapon kar;//mrs:)
+	weapon gew41;//mrs:)
+	weapon gew43;//mrs:)
+	weapon vol;//mrs:)
+	
 };
 
 //long int person::money = 1000;     hazf
@@ -143,31 +271,6 @@ void operator+=(person &p,t increase){// baraye kam shodan jon mrs:)
 		p.health+=increase;//mrs:)	
 }//mrs:)
 
-class weapon
-{
-	friend void shop();
-public:
-
-	weapon(int size_bullet, int reload) :reload_time(reload)
-	{
-		this->size_bullet = size_bullet;
-	}
-
-	void de_sb(int per_click) {
-		size_bullet -= per_click;
-
-	}
-
-	void All_bullets(int Bought_bullets)
-	{
-		all_bullets += Bought_bullets;
-	}
-private:
-	const int reload_time;//time of baking
-	int all_bullets;
-	int size_bullet;
-	//int per_click;  delete
-};
 
 bool check(int mode) {
 	if (mode != 1 || mode != 2)
@@ -178,13 +281,7 @@ bool check(int mode) {
 	gun.de_sb();
 }*/
 
-weapon Karabiner_98K(5, 53);
-weapon Gewehr_41(10, 79);
-weapon Gewehr_43(10, 55);
-weapon Volkssturmgewehr(13, 50);
 
-weapon Gun[4] = { Karabiner_98K , Gewehr_41 , Gewehr_43 , Volkssturmgewehr };
-int G1 = 0, G2 = 0, G3 = 0, G4 = 0;//entekhab selah faghat yek bar baraye shop
 void shop(person& E, person& D)
 {
 
@@ -211,18 +308,18 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && G1 == 0)
+				else if (choise == 1 && E.kar.havee()==0)//taghir dadam mrs:)
 				{
-					decrease_m(15,E,D);
-
-					G2 = 0;
+				decrease_m(15,E,D);
+					E.have_gun(1);
+					/*G2 = 0;to member fun anjam mishe ina mrs:)
 					G3 = 0;
 					G4 = 0;
 
-					G1++;
+					G1++;*/
 					break;
 				}
-				else if (choise == 1 && G1 == 1)
+				else if (choise == 1 && E.kar.havee()== 1)//taghir dadam mrs:)
 				{
 					cout << "This weapon has already been purchased." << endl;
 					break;
@@ -236,18 +333,18 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && G2 == 0)
+				else if (choise == 1 && E.gew41.havee()== 0)//taghir dadam mrs:)
 				{
 					decrease_m(18.5,E,D);
-
-					G1 = 0;
+					E.have_gun(2);
+					/*G1 = 0; mrs:)
 					G3 = 0;
 					G4 = 0;
 
-					G2++;
+					G2++;*/
 					break;
 				}
-				else if (choise == 1 && G2 == 1)
+				else if (choise == 1 && E.gew41.havee() ==1)//taghir dadam mrs:)
 				{
 					cout << "This weapon has already been purchased." << endl;
 					break;
@@ -261,18 +358,18 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && G3 == 0)
+				else if (choise == 1 && E.gew43.havee()== 0)//taghir dadam mrs:)
 				{
 					decrease_m(20.5,E,D);
-
-					G1 = 0;
+					E.have_gun(3);
+					/*G1 = 0;mrs:)
 					G2 = 0;
 					G4 = 0;
 
-					G3++;
+					G3++;*/
 					break;
 				}
-				else if (choise == 1 && G3 == 1)
+				else if (choise == 1 && E.gew43.havee() == 1)//taghir dadam mrs:)
 				{
 					cout << "This weapon has already been purchased." << endl;
 					break;
@@ -286,18 +383,18 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && G4 == 0)
+				else if (choise == 1 && E.vol.havee() == 0)//taghir dadam mrs:)
 				{
 					decrease_m(25,E,D);
-
-					G1 = 0;
+					E.have_gun(4);
+					/*G1 = 0;mrs:)
 					G2 = 0;
 					G3 = 0;
 
-					G4++;
+					G4++;*/
 					break;
 				}
-				else if (choise == 1 && G4 == 1)
+				else if (choise == 1 && E.vol.havee() == 1)//taghir dadam mrs:)
 				{
 					cout << "This weapon has already been purchased." << endl;
 					break;
@@ -319,12 +416,13 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && G1 == 1)
+				else if (choise == 1 && E.kar.havee() == 1)//taghir dadam mrs:)
 				{
 					decrease_m(5,E,D);
 					
-
-					Gun[0].All_bullets(10);
+					//(E.kar.All_bullets)+=10; chera nashod????mrs:)
+					E.kar.All_bullets(10);
+					//Gun[0].All_bullets(10);mrs:))
 					break;
 				}
 			}
@@ -336,11 +434,11 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && G2 == 1)
+				else if (choise == 1 && E.gew41.havee() == 1)//taghir dadam mrs:)
 				{
 					decrease_m(9.5,E,D);
-
-					Gun[1].All_bullets(15);
+					E.gew41.All_bullets(15);
+					//Gun[1].All_bullets(15);mrs:)
 
 					break;
 				}
@@ -353,11 +451,11 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && G3 == 1)
+				else if (choise == 1 && E.gew43.havee() == 1)//taghir dadam mrs:)
 				{
 					decrease_m(9.5,E,D);
-
-					Gun[2].All_bullets(15);
+					E.gew43.All_bullets(15);//mrs:)
+					//Gun[2].All_bullets(15);mrs:)
 
 					break;
 				}
@@ -370,11 +468,11 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && G4 == 1)
+				else if (choise == 1 && E.vol.havee() == 1)//taghir dadam mrs:)
 				{
 					decrease_m(15,E,D);
-
-					Gun[3].All_bullets(20);
+					E.vol.All_bullets(20);
+					//Gun[3].All_bullets(20);
 
 					break;
 				}
@@ -413,23 +511,47 @@ void shop(person& E, person& D)
 	}
 }
 
-void decreas_bullet(int BULLET)
+bool decreas_bullet(int BULLET,person &E)//**********************inja taghirati anjam dadam mrs:)
 {
-	if (G1 == 1)
-	{
-		Gun[0].de_sb(BULLET);
-	}
-	else if (G2 == 1)
-	{
-		Gun[1].de_sb(BULLET);
-	}
-	else if (G3 == 1)
-	{
-		Gun[2].de_sb(BULLET);
-	}
-	else if (G4 == 1)
-	{
-		Gun[3].de_sb(BULLET);
+	
+	cout << "1.Karabiner 98K" << endl << "2.Gewehr 41" << endl << "3.Gewehr 43" << endl << "4.Volkssturmgewehr" << endl;
+	while(true){			
+		if(E.kar.havee() == 1)//taghir dadam mrs:)
+		{
+			if(E.kar.de_sb(BULLET))
+				return true;
+			else{
+				return 0;
+				cout<<"can not";
+			}
+		}
+		
+		else if(E.gew41.havee() == 1)//taghir dadam mrs:)
+		{
+			if(E.gew41.de_sb(BULLET))
+				return true;
+			else{
+				return 0;
+			}
+		}
+		
+		else if(E.gew43.havee() == 1)//taghir dadam mrs:)
+		{
+		if(E.gew43.de_sb(BULLET))
+				return true;
+			else{
+				return 0;
+			}
+		}
+		
+		else if(E.vol.havee()==1)//taghir dadam mrs:)
+		{
+			if(E.vol.de_sb(BULLET))
+				return true;
+			else{
+				return 0;
+			}
+		}
 	}
 }
 
@@ -441,7 +563,7 @@ void calm_situation(person& E, person& D)// to mogheiat hahe arom continue,statu
 	while(true)
 	{
 		int choise;
-		cout << "Which one do you have in mind?" << endl << "1.continue" << endl << "2.shop" << endl << "3.status" << endl;
+		cout << "Which one do you have in mind?" << endl << "1.continue" << endl << "2.shop" << endl << "3.status" << endl<<"4.reload"<<endl;
 		cin >> choise;
 		system("cls");
 		if(choise == 1)
@@ -462,8 +584,24 @@ void calm_situation(person& E, person& D)// to mogheiat hahe arom continue,statu
 			D.print_information();
 			this_thread::sleep_for(chrono::seconds(5));
 			system("cls");
+			E.print_bullet();
 			
 		}
+		else 
+			if(choise==4){
+				if(E.kar.have==1)
+					E.kar.func_reload();
+				if(E.gew41.have==1)
+				
+					E.gew41.func_reload();
+					
+				if(E.gew43.have==1)
+					E.gew43.func_reload();
+					
+				if(E.vol.have==1)
+					E.vol.func_reload();		
+			}
+				
 	}
 }
 
@@ -608,10 +746,11 @@ void SubLevel(T cash,T h,person& E,person& D)//start sublevel
 	this_thread::sleep_for(chrono::seconds(6));
 	cout << "They see a black bear sitting on the ground." << endl;
 	this_thread::sleep_for(chrono::seconds(5));
+	cout<<"you want 1 bullets \n";
+	decreas_bullet(1,E);//*************************************************************************
 	cout << "Emma draws her gun and points it at the bear." << endl;
 	this_thread::sleep_for(chrono::seconds(5));
 	cout << "He kills the bear with just one bullet." << endl;
-	decreas_bullet(1);
 	this_thread::sleep_for(chrono::seconds(4));
 	
 	cout << "They go to the city and sell the bear." << endl;
@@ -627,17 +766,28 @@ void SubLevel(T cash,T h,person& E,person& D)//start sublevel
 	Add_m(cash,E,D);//miad be pol ezafe mikone 
 }
 
+void save_checkpoint(int checkpoint,person&E,person&D){//baraye save kodom checkpoint mrs:)
+	E.checkpoint=checkpoint;
+	D.checkpoint=checkpoint;
+	save_replace(E,D);
+}
+
 int main()
 {
 	int menu, which, marhale, money, health, id;
 	
 	//fstream saver("save.txt", ios::in | ios::out);  hazf
-	person test(0);
-	person D(0);
-	person E(1);
+	
+	//weapon Karabiner_98K(5, 53,5);
+	//weapon Gewehr_41(10, 79,10);
+	//weapon Gewehr_43(10, 55,10);
+	//weapon Volkssturmgewehr(13, 50,13);
+	person test(0,Karabiner_98K,Gewehr_41,Gewehr_43,Volkssturmgewehr);
+	person D(0,Karabiner_98K,Gewehr_41,Gewehr_43,Volkssturmgewehr);
+	person E(1,Karabiner_98K,Gewehr_41,Gewehr_43,Volkssturmgewehr);
 	while(true)
 	{
-		
+		int checkpoint=0;
 		system("cls");
 		cout << "1.Play" << endl << "2.Setting" << endl << "3.Shop" << endl;
 		cin >> menu;
@@ -649,7 +799,7 @@ int main()
 
 				while(true)
 				{
-					cout << "what mode you want?!\n" << "2.Easy\n" << "1.Hard\n" ;
+					cout << "what mode you want?!\n" << "1.Easy\n" << "2.Hard\n" ;
 					cin >> mode;
 					system("cls");
 					if (!check(mode)) {
@@ -712,438 +862,476 @@ int main()
 				}
 				switch (marhale)
 				{
+					int choise;
 					case 1:
 					{
-						int choise;
-						cout << "1: two-way belief" << endl;
-						this_thread::sleep_for(chrono::seconds(4));
-						system("cls");
-								
-						cout << "Due to the suspicious activities of the Nazis in Myanmar, the Soviet Army needed to send an agent to Myanmar to infiltrate the Nazis." << endl;
-						this_thread::sleep_for(chrono::seconds(8));
-			
-						cout << "This mission is offered to Emma..." << endl;
-						this_thread::sleep_for(chrono::seconds(2));
-						while (true)
-						{
-							cout << "Commander: Do you want to do this mission in Myanmar?" << endl << "1.yes" /*start mission*/ << endl << "2.I want 3 days to respond" << endl;
-							cin >> choise;	
-							system("cls");
-							if (choise == 1)
-							{
-								break;
-							}
-							else if (choise == 2)
-							{
-							
-								cout << "The next day and after thinking about the mission ..." << endl;
-								this_thread::sleep_for(chrono::seconds(4));	
-	
-								system("Color 79");
-								cout << "Emma remembers how her father was killed by the Nazis." << endl;
-								this_thread::sleep_for(chrono::seconds(5));
-								cout << "That is why she decides to accept this mission." << endl;
-								this_thread::sleep_for(chrono::seconds(6));
-								system("cls");
-								break;
-							}
-						}	
-						system("color 0f");
-						cout << "Emma travels to Myanmar alone and first enters a secret shop to buy weapons." << endl;
-						this_thread::sleep_for(chrono::seconds(6));
-						system("cls");
-						while (true)
-						{
-							shop(E,D);
-							system("cls");
-							if (G1 > 0 || G2 > 0 || G3 > 0 || G4 > 0)
-							{
-								cout << "It was a good choice." << endl;
-								break;
-							}
-						}
-						this_thread::sleep_for(chrono::seconds(3));
-						system("cls");
-		
-						this_thread::sleep_for(chrono::seconds(1));
-						cout << "After touring Myanmar and gathering information, Emma discovers Nazi activity in the forests of Bagan.\n" << " He goes there to do his mission." << endl;
-						this_thread::sleep_for(chrono::seconds(11));
-						cout << "In the middle of the night, while wandering in the woods,\n" << "She met Daniel and at first thought he was a Nazi because of the equipment Daniel had with him (which Daniel had bought from the natives and had a Nazi symbol)." << endl;
-						this_thread::sleep_for(chrono::seconds(20));	
-	
-						cout << "So Emma went to her so that she could approach him and penetrate their position." << endl;
-						this_thread::sleep_for(chrono::seconds(8));
-						system("cls");	
-	
-	
-						cout << "Daniel told his own story and why he came here." << endl;
-						this_thread::sleep_for(chrono::seconds(5));
-						cout << "Emma, who thought Daniel was a Nazi, thought the story Daniel had told her was a lie." << endl; 
-						this_thread::sleep_for(chrono::seconds(7));
-						system("cls");
-						calm_situation(E,D);
-						system("cls");
+						if(E.get_checkpoint()==0){
 						
-						
-						
-						while (true)
-						{
-							cout << "After spending the night in the wood near dawn, they suddenly stumble upon a Nazi camp.\n" << " At that moment, 4 Nazi soldiers see them. Daniel quickly flees in fear." << endl;
-							this_thread::sleep_for(chrono::seconds(10));
-							cout << "Emma:" << endl << "1.I shoot at the Nazis and then run away" << endl << "2.I escape" << endl;
-							cin >> choise;
+							//int choise; mrs:)
+							cout << "1: two-way belief" << endl;
+							this_thread::sleep_for(chrono::seconds(4));
 							system("cls");
-							if (choise == 1)
-							{
-								cout << "Emma fires three bullets at the Nazis and kills two of them" << endl;
-								this_thread::sleep_for(chrono::seconds(5));
-								decreas_bullet(3);
-								
-								cout << "Then Emma runs away" << endl;
-								this_thread::sleep_for(chrono::seconds(2));
-								cout << "The Nazis chase after them and shoot at them.\n";
-								this_thread::sleep_for(chrono::seconds(4));
-								cout << "Daniel's hand shoots." << endl;
-								D -= 2;
-								this_thread::sleep_for(chrono::seconds(3));
-								
-								cout << "Meanwhile, three wolves that smelled Daniel's blood attacked them." << endl;
-								this_thread::sleep_for(chrono::seconds(5));
-								cout << "Daniel and Emma escaped from the wolves and the wolves went to the Nazis and clashed with them and finally killed them." << endl;
-								this_thread::sleep_for(chrono::seconds(10));
-								system("cls");
-								cout << "Emma and Daniel continue to reach a river that is crossed by a bridge." << endl;
-								this_thread::sleep_for(chrono::seconds(4));
-	
-								while (true)
-								{
-									cout << "1.Let's cross the bridge" << endl << "2.Let's go under the bridge" << endl;
-									cin >> choise;
-									system("cls");
-									if (choise == 1)
-									{
-										cout << "They cross the bridge and reach the abandoned huts." << endl;
-										this_thread::sleep_for(chrono::seconds(4));
-										//sublevel
-										
-										break;
-									}
-									else if (choise == 2)
-									{
-										cout << "They swim in the river and the Nazis lose them." << endl;
-										this_thread::sleep_for(chrono::seconds(4));
-										break;
-									}
-								}
-								break;
-							}
-							else if (choise == 2)
-							{
-								cout << "Emma also runs away." << endl;
-								this_thread::sleep_for(chrono::seconds(2));
-		
-								cout << "The Nazis chase after them and shoot at them.\n";
-								this_thread::sleep_for(chrono::seconds(3));
-								cout << "Daniel's hand shoots." << endl;
-								D -= 2;
-								this_thread::sleep_for(chrono::seconds(2));
-								
-								cout << "Meanwhile, three wolves that smelled Daniel's blood attacked them." << endl;
-								this_thread::sleep_for(chrono::seconds(4));
-								cout << "Daniel and Emma escaped from the wolves and the wolves went to the Nazis and clashed with them and finally kill the tow of them." << endl;
-								this_thread::sleep_for(chrono::seconds(15));
-								system("cls");
-								
-	
-								while (true)
-								{
-									cout << "Emma and Daniel continue to reach a river that is crossed by a bridge." << endl;
-									this_thread::sleep_for(chrono::seconds(3));
-									cout << "1.Let's cross the bridge" << endl << "2.Let's go under the bridge" << endl;
-									cin >> choise;
-									system("cls");
-									if (choise == 1)
-									{
-										cout << "They cross the bridge." << endl;
-										this_thread::sleep_for(chrono::seconds(2));
-										cout << "They go to abandoned huts and stand there." << endl;
-										this_thread::sleep_for(chrono::seconds(3));
-										cout << "The two Nazis who were following him also go there to find them." << endl;
-										this_thread::sleep_for(chrono::seconds(5));
-										cout << "Emma, who was standing up, stabbed one of them in the back with a knife." << endl;
-										this_thread::sleep_for(chrono::seconds(5));
-										cout << "The other Nazi heard Daniel panting and went to kill Daniel." << endl;
-										this_thread::sleep_for(chrono::seconds(8));
-										system("cls");
-										while (true)
-										{
-											cout << "Daniel also notices him and looks for a means of self-defense that catches his eye on a rock." << endl;
-											this_thread::sleep_for(chrono::seconds(3));
-											cout << "Daniel:" << endl << "1.Take the stone and defend myself" << endl << "2.Do not take the stone" << endl;
-											cin >> choise;
-											system("cls");
-											if (choise == 1)
-											{
-												cout << "Daniel throws a stone at the Nazi soldier." << endl;
-												this_thread::sleep_for(chrono::seconds(3));
-												cout << "Nazia gets angry and points her gun at Daniel, who is suddenly shot by Emma from a distance." << endl;
-												decreas_bullet(2);
-												
-												this_thread::sleep_for(chrono::seconds(7));
-												break;
-											}
-											else if (choise == 2)
-											{
-												cout << "The Nazi slowly approaches Daniel to kill him." << endl;
-												this_thread::sleep_for(chrono::seconds(3));
-												cout << "Emma slowly approaches the Nazi soldier from behind and kills him with a knife." << endl;
-												this_thread::sleep_for(chrono::seconds(6));
-												break;
-											}
-										}
-										break;
-									}
-									else if (choise == 2)
-									{
-										cout << "They swim in the river and the Nazis lose them." << endl;
-										this_thread::sleep_for(chrono::seconds(3));
-										break;
-									}
 									
-								}
+							cout << "Due to the suspicious activities of the Nazis in Myanmar, the Soviet Army needed to send an agent to Myanmar to infiltrate the Nazis." << endl;
+							this_thread::sleep_for(chrono::seconds(8));
+				
+							cout << "This mission is offered to Emma..." << endl;
+							this_thread::sleep_for(chrono::seconds(2));
+							while (true)
+							{
+								cout << "Commander: Do you want to do this mission in Myanmar?" << endl << "1.yes" /*start mission*/ << endl << "2.I want 3 days to respond" << endl;
+								cin >> choise;	
 								system("cls");
-								break;
+								if (choise == 1)
+								{
+									break;
+								}
+								else if (choise == 2)
+								{
+								
+									cout << "The next day and after thinking about the mission ..." << endl;
+									this_thread::sleep_for(chrono::seconds(4));	
+		
+									system("Color 79");
+									cout << "Emma remembers how her father was killed by the Nazis." << endl;
+									this_thread::sleep_for(chrono::seconds(5));
+									cout << "That is why she decides to accept this mission." << endl;
+									this_thread::sleep_for(chrono::seconds(6));
+									system("cls");
+									break;
+								}
+							}	
+							system("color 0f");
+							cout << "Emma travels to Myanmar alone and first enters a secret shop to buy weapons." << endl;
+							this_thread::sleep_for(chrono::seconds(6));
+							system("cls");
+							while (true)
+							{
+								shop(E,D);
+								system("cls");
+								if (G1 > 0 || G2 > 0 || G3 > 0 || G4 > 0)
+								{
+									cout << "It was a good choice." << endl;
+									break;
+								}
 							}
+							this_thread::sleep_for(chrono::seconds(3));
+							system("cls");
+			
+							this_thread::sleep_for(chrono::seconds(1));
+							cout << "After touring Myanmar and gathering information, Emma discovers Nazi activity in the forests of Bagan.\n" << " He goes there to do his mission." << endl;
+							this_thread::sleep_for(chrono::seconds(11));
+							cout << "In the middle of the night, while wandering in the woods,\n" << "She met Daniel and at first thought he was a Nazi because of the equipment Daniel had with him (which Daniel had bought from the natives and had a Nazi symbol)." << endl;
+							this_thread::sleep_for(chrono::seconds(20));	
+		
+							cout << "So Emma went to her so that she could approach him and penetrate their position." << endl;
+							this_thread::sleep_for(chrono::seconds(8));
+							system("cls");	
+		
+		
+							cout << "Daniel told his own story and why he came here." << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							cout << "Emma, who thought Daniel was a Nazi, thought the story Daniel had told her was a lie." << endl; 
+							this_thread::sleep_for(chrono::seconds(7));
+							system("cls");
 						}
-						system("cls");
-						cout << "When the situation calms down, they take refuge in the abandoned temples to rest and get Daniel's dressing.\n";
-						this_thread::sleep_for(chrono::seconds(12));
-						system("cls");
+						save_checkpoint(1,E,D);//save checkpoint mrs:)
+						if(E.get_checkpoint()==1){//mrs:)								
+																					
+							system("cls");
+							calm_situation(E,D);
+							system("cls");
+																		
+							while (true)
+							{
+								cout << "After spending the night in the wood near dawn, they suddenly stumble upon a Nazi camp.\n" << " At that moment, 4 Nazi soldiers see them. Daniel quickly flees in fear." << endl;
+								this_thread::sleep_for(chrono::seconds(10));
+								cout << "Emma:" << endl << "1.I shoot at the Nazis and then run away" << endl << "2.I escape" << endl;
+								cin >> choise;
+								system("cls");
+								if (choise == 1)
+								{
+									cout<<"you want 3 bullets \n";
+									if(!decreas_bullet(3,E));//****************************************************************************
+									    exit(0);
+									cout << "Emma fires three bullets at the Nazis and kills two of them" << endl;
+									this_thread::sleep_for(chrono::seconds(5));
+									
+									cout << "Then Emma runs away" << endl;
+									this_thread::sleep_for(chrono::seconds(2));
+									cout << "The Nazis chase after them and shoot at them.\n";
+									this_thread::sleep_for(chrono::seconds(4));
+									cout << "Daniel's hand shoots." << endl;
+									D -= 2;
+									this_thread::sleep_for(chrono::seconds(3));
+									
+									cout << "Meanwhile, three wolves that smelled Daniel's blood attacked them." << endl;
+									this_thread::sleep_for(chrono::seconds(5));
+									cout << "Daniel and Emma escaped from the wolves and the wolves went to the Nazis and clashed with them and finally killed them." << endl;
+									this_thread::sleep_for(chrono::seconds(10));
+									system("cls");
+									cout << "Emma and Daniel continue to reach a river that is crossed by a bridge." << endl;
+									this_thread::sleep_for(chrono::seconds(4));
+		
+									while (true)
+									{
+										cout << "Emma:" << endl << "1.Let's cross the bridge" << endl << "2.Let's go under the bridge" << endl;
+										cin >> choise;
+										system("cls");
+										if (choise == 1)
+										{
+											cout << "They cross the bridge and reach the abandoned huts." << endl;
+											this_thread::sleep_for(chrono::seconds(4));
+											//sublevel
+											
+											break;
+										}
+										else if (choise == 2)
+										{
+											cout << "They swim in the river and the Nazis lose them." << endl;
+											this_thread::sleep_for(chrono::seconds(4));
+											break;
+										}
+									}
+									break;
+								}
+								else if (choise == 2)
+								{
+									cout << "Emma also runs away." << endl;
+									this_thread::sleep_for(chrono::seconds(2));
+			
+									cout << "The Nazis chase after them and shoot at them.\n";
+									this_thread::sleep_for(chrono::seconds(3));
+									cout << "Daniel's hand shoots." << endl;
+									D -= 2;
+									this_thread::sleep_for(chrono::seconds(2));
+									
+									cout << "Meanwhile, three wolves that smelled Daniel's blood attacked them." << endl;
+									this_thread::sleep_for(chrono::seconds(4));
+									cout << "Daniel and Emma escaped from the wolves and the wolves went to the Nazis and clashed with them and finally kill the tow of them." << endl;
+									this_thread::sleep_for(chrono::seconds(15));
+									system("cls");
+									
+		
+									while (true)
+									{
+										cout << "Emma and Daniel continue to reach a river that is crossed by a bridge." << endl;
+										this_thread::sleep_for(chrono::seconds(3));
+										cout << "Emma:" << endl << "1.Let's cross the bridge" << endl << "2.Let's go under the bridge" << endl;
+										cin >> choise;
+										system("cls");
+										if (choise == 1)
+										{
+											cout << "They cross the bridge." << endl;
+											this_thread::sleep_for(chrono::seconds(2));
+											cout << "They go to abandoned huts and stand there." << endl;
+											this_thread::sleep_for(chrono::seconds(3));
+											cout << "The two Nazis who were following him also go there to find them." << endl;
+											this_thread::sleep_for(chrono::seconds(5));
+											cout << "Emma, who was standing up, stabbed one of them in the back with a knife." << endl;
+											this_thread::sleep_for(chrono::seconds(5));
+											cout << "The other Nazi heard Daniel panting and went to kill Daniel." << endl;
+											this_thread::sleep_for(chrono::seconds(8));
+											system("cls");
+											while (true)
+											{
+												cout << "Daniel also notices him and looks for a means of self-defense that catches his eye on a rock." << endl;
+												this_thread::sleep_for(chrono::seconds(3));
+												cout << "Daniel:" << endl << "1.Take the stone and defend myself" << endl << "2.Do not take the stone" << endl;
+												cin >> choise;
+												system("cls");
+												if (choise == 1)
+												{
+													cout<<"you want 1 bullets \n";//ezafe shod mrs:)
+													if(!decreas_bullet(1,E));//*******************************************************
+													   exit(0);
+													cout << "Daniel throws a stone at the Nazi soldier." << endl;
+													this_thread::sleep_for(chrono::seconds(3));
+													cout << "Nazia gets angry and points her gun at Daniel, who is suddenly shot by Emma from a distance." << endl;
+													
+													this_thread::sleep_for(chrono::seconds(7));
+													break;
+												}
+												else if (choise == 2)
+												{
+													cout << "The Nazi slowly approaches Daniel to kill him." << endl;
+													this_thread::sleep_for(chrono::seconds(3));
+													cout << "Emma slowly approaches the Nazi soldier from behind and kills him with a knife." << endl;
+													this_thread::sleep_for(chrono::seconds(6));
+													break;
+												}
+											}
+											break;
+										}
+										else if (choise == 2)
+										{
+											cout << "They swim in the river and the Nazis lose them." << endl;
+											this_thread::sleep_for(chrono::seconds(3));
+											break;
+										}
+										
+									}
+									system("cls");
+									break;
+								}
+							}
+							system("cls");
+							cout << "When the situation calms down, they take refuge in the abandoned temples to rest and get Daniel's dressing.\n";
+							this_thread::sleep_for(chrono::seconds(12));
+							system("cls");
+						}
+						save_checkpoint(2,E,D);//save checkpoint mrs:)
+						if(E.get_checkpoint()==2){//mrs:)	
+							
+							system("cls");	
+							calm_situation(E,D);
+							system("cls");
+							
+							cout << "Emma trusts Daniel and realizes that Daniel is not a Nazi.\n";
+							this_thread::sleep_for(chrono::seconds(6));
+							cout << "she tells her true story to Daniel.\n";
+							this_thread::sleep_for(chrono::seconds(4));
+							cout << "Daniel shows the book to Emma and says that I am looking for the entrance to the gate here.\n";
+							this_thread::sleep_for(chrono::seconds(10));
+							cout << "Emma, who does not believe in such things, thinks that Daniel is crazy and is snoozing.";
+							this_thread::sleep_for(chrono::seconds(12));
+							system("cls");
+			
+							cout << "They rest for a few hours, and around noon Emma leaves for town to get medicine for Daniel and food." << endl;
+							this_thread::sleep_for(chrono::seconds(11));
+							cout << "On the way through the forest, she sees a group of Nazis imprisoning the natives of the area and taking them to one side." << endl;
+							this_thread::sleep_for(chrono::seconds(11));
+							cout << "She follows them and reaches a pit and the Nazis enter it. Facing the pit is a thick red tree with blue flowers on it." << endl;
+							this_thread::sleep_for(chrono::seconds(13));
+							cout << "She suddenly realizes that it is too late and Daniel is waiting." << endl;
+							this_thread::sleep_for(chrono::seconds(7));
+							cout << "She goes to the city and prepares the necessary items and returns to the temple." << endl;
+							this_thread::sleep_for(chrono::seconds(14));
+							system("cls");
+			
+							cout << "Emma tells the story of the Nazis and that pit and tree to Daniel." << endl;
+							this_thread::sleep_for(chrono::seconds(7));
+							cout << "And Daniel shows her a part of the book that gives exactly the characteristics of this tree and says that there is a pit near it." << endl;
+							this_thread::sleep_for(chrono::seconds(14));
+							cout << "Emma believes Daniel." << endl;
+							this_thread::sleep_for(chrono::seconds(3));
+							cout << "Emma helps Daniel find the pit, both because the Nazis enter the pit and because of her curiosity about the book's story." << endl;
+							this_thread::sleep_for(chrono::seconds(15));
+							system("cls");
+							
+							E.set_marhale(2);//mrs:)
+							D.set_marhale(2);//mrs:)
+							save_checkpoint(3,E,D);//save checkpoint mrs:)
+						}
 						calm_situation(E,D);
 						system("cls");
 						
-						cout << "Emma trusts Daniel and realizes that Daniel is not a Nazi.\n";
-						this_thread::sleep_for(chrono::seconds(6));
-						cout << "He tells his true story to Daniel.\n";
-						this_thread::sleep_for(chrono::seconds(4));
-						cout << "Daniel shows the book to Emma and says that I am looking for the entrance to the gate here.\n";
-						this_thread::sleep_for(chrono::seconds(10));
-						cout << "Emma, who does not believe in such things, thinks that Daniel is crazy and is snoozing.";
-						this_thread::sleep_for(chrono::seconds(12));
-						system("cls");
-		
-						cout << "They rest for a few hours, and around noon Emma leaves for town to get medicine for Daniel and food." << endl;
-						this_thread::sleep_for(chrono::seconds(11));
-						cout << "On the way through the forest, she sees a group of Nazis imprisoning the natives of the area and taking them to one side." << endl;
-						this_thread::sleep_for(chrono::seconds(11));
-						cout << "She follows them and reaches a pit and the Nazis enter it. Facing the pit is a thick red tree with blue flowers on it." << endl;
-						this_thread::sleep_for(chrono::seconds(13));
-						cout << "She suddenly realizes that it is too late and Daniel is waiting." << endl;
-						this_thread::sleep_for(chrono::seconds(7));
-						cout << "She goes to the city and prepares the necessary items and returns to the temple." << endl;
-						this_thread::sleep_for(chrono::seconds(14));
-						system("cls");
-		
-						cout << "Emma tells the story of the Nazis and that pit and tree to Daniel." << endl;
-						this_thread::sleep_for(chrono::seconds(7));
-						cout << "And Daniel shows her a part of the book that gives exactly the characteristics of this tree and says that there is a pit near it." << endl;
-						this_thread::sleep_for(chrono::seconds(14));
-						cout << "Emma believes Daniel." << endl;
-						this_thread::sleep_for(chrono::seconds(3));
-						cout << "Emma helps Daniel find the pit, both because the Nazis enter the pit and because of her curiosity about the book's story." << endl;
-						this_thread::sleep_for(chrono::seconds(15));
-						system("cls");
-						calm_situation(E,D);
-						system("cls");
-						break;
 					}
 					case 2:
 					{
-						int choise;
-						cout << "2: In search of the pit" << endl;
-						this_thread::sleep_for(chrono::seconds(4));
-						system("cls");
-						
-						cout << "Daniel and Emma stayed overnight in the temple and headed out into the woods in the morning." << endl;
-						this_thread::sleep_for(chrono::seconds(10));
-									
-						cout << "Emma could not remember the way to the pit." << endl;
-						this_thread::sleep_for(chrono::seconds(6));
-						system("cls");
-						
-						while(true)
+						if(E.get_checkpoint()==3)//mrs:)
 						{
-							cout << "In the forest, they find a sign of the Nazis path and follow it to a crossroads." << endl;
-							this_thread::sleep_for(chrono::seconds(6));
-							cout << "1.River path" << endl << "2.Forest path" << endl;
-							cin >> choise ;
+							int choise;
+							cout << "2: In search of the pit" << endl;
+							this_thread::sleep_for(chrono::seconds(4));
 							system("cls");
-							if(choise == 1)
+							
+							cout << "Daniel and Emma stayed overnight in the temple and headed out into the woods in the morning." << endl;
+							this_thread::sleep_for(chrono::seconds(10));
+										
+							cout << "Emma could not remember the way to the pit." << endl;
+							this_thread::sleep_for(chrono::seconds(6));
+							system("cls");
+							
+							while(true)
 							{
-								cout << "They cross the river and see a boat there." << endl;
-								this_thread::sleep_for(chrono::seconds(5));
-								cout << "They use it to cross the river." << endl;
-								this_thread::sleep_for(chrono::seconds(4));
-								cout << "They board a boat and move across the river." << endl;
-								this_thread::sleep_for(chrono::seconds(5));
-										
-								
-										
-								cout << "They reach the forest and continue on their way." << endl;
-								this_thread::sleep_for(chrono::seconds(5));
-								
+								cout << "In the forest, they find a sign of the Nazis path and follow it to a crossroads." << endl;
+								this_thread::sleep_for(chrono::seconds(6));
+								cout << "Which way?" << endl << "1.River path" << endl << "2.Forest path" << endl;
+								cin >> choise ;
 								system("cls");
-								while(true)
+								if(choise == 1)
 								{
-									cout << "On the way, they see a sign of a bear claw on a tree." << endl;
-									this_thread::sleep_for(chrono::seconds(3));
-									cout << "Emma:" << endl << "1.Go check" << endl << "2.Do not check" << endl;
-									cin >> choise ;
+									cout << "They cross the river and see a boat there." << endl;
+									this_thread::sleep_for(chrono::seconds(5));
+									cout << "They use it to cross the river." << endl;
+									this_thread::sleep_for(chrono::seconds(4));
+									cout << "They board a boat and move across the river." << endl;
+									this_thread::sleep_for(chrono::seconds(5));
+											
+									
+											
+									cout << "They reach the forest and continue on their way." << endl;
+									this_thread::sleep_for(chrono::seconds(5));
+									
 									system("cls");
-									if(choise == 1)
+									while(true)
 									{
-										//start SubLevel
-										SubLevel(15, 2, E, D);
-										break;
-									}
-									else if(choise == 2)
-									{
-										break;
+										cout << "On the way, they see a sign of a bear claw on a tree." << endl;
+										this_thread::sleep_for(chrono::seconds(3));
+										cout << "Emma:" << endl << "1.Go check" << endl << "2.Do not check" << endl;
+										cin >> choise ;
+										system("cls");
+										if(choise == 1)
+										{
+											//start SubLevel
+											SubLevel(15, 2, E, D);
+											break;
+										}
+										else if(choise == 2)
+										{
+											break;
+										}
+												
 									}
 											
-								}
-										
-								break;
-							}
-							else if(choise == 2)
-							{			
-								while(true)
-								{
-									cout << "They continue their way in the forest and encounter some unknown characters who attack them." << endl;
-									this_thread::sleep_for(chrono::seconds(5));
-									cout << "1.Shoot them" << endl << "2.Do not shoot" << endl;
-									cin >> choise ;
-									system("cls");
-									if(choise == 1)
-									{	
-										cout << "Emma shoots at them to kill them, but realizes that the bullets have no effect." << endl;
-										decreas_bullet(5);
-										this_thread::sleep_for(chrono::seconds(8));
-										break;
-									}
-									else if(choise == 2)
-									{
-										break;
-									}
-								}
-								cout << "They hurt Emma and Daniel and then let them go." << endl;
-								this_thread::sleep_for(chrono::seconds(5));
-								E -= 2;
-								D -= 2;
-								
-								cout << "Emma and Daniel conclude that they were elves." << endl;
-								this_thread::sleep_for(chrono::seconds(5));
-								cout << "That is why they had an unknown face and the bullets did not affect them." << endl;
-								this_thread::sleep_for(chrono::seconds(10));
-										
-								break;
-							}
-								
-						}
-						system("cls");
-						cout << "They come to an inscription." << endl;
-						this_thread::sleep_for(chrono::seconds(3));
-						cout << "Daniel realizes that the sign on the inscription is the same as the book sign, so they conclude that they have chosen the right path." << endl;
-						this_thread::sleep_for(chrono::seconds(14));
-						system("cls");
-						calm_situation(E,D);
-						system("cls");
-								
-						cout << "They continue on their way to reach a strange village." << endl;
-						this_thread::sleep_for(chrono::seconds(5));
-						cout << "They go to the village to get information to talk to the locals." << endl;
-						this_thread::sleep_for(chrono::seconds(7));
-						cout << "When they enter, they see that everyone there has unknown faces and realize that they are goblins." << endl;
-						this_thread::sleep_for(chrono::seconds(9));
-						cout << "They were very scared, kept their composure and went to the people." << endl;
-						this_thread::sleep_for(chrono::seconds(7));
-						cout << "They talked to them about the Nazi movements and figured out which way to go." << endl;
-						this_thread::sleep_for(chrono::seconds(13));
-						system("cls");
-						cout << "Suddenly their eyes hit a rocket and went towards it." << endl;
-						this_thread::sleep_for(chrono::seconds(3));
-								
-						while(true)
-						{
-							cout << "Emma:" << endl << "1.Let's steal it" << endl << "2.Let's buy it" << endl;
-							cin >> choise ;
-							system("cls");
-							if(choise == 1)
-							{
-								cout << "The elves notice and follow them." << endl;
-								this_thread::sleep_for(chrono::seconds(3));
-								cout << "They hurt Emma and Daniel while chasing them." << endl;
-								E -= 2;
-								D -= 2;
-								this_thread::sleep_for(chrono::seconds(5));
-								cout << "Emma and Daniel escape and go in the direction the elves have told them.";
-								this_thread::sleep_for(chrono::seconds(7));
-										
-								break;
-								}
-							else if(choise == 2)
-							{
-								int baghi_mande;
-								cout << "The price of a rocket launcher is 40$ for you" << endl;
-								baghi_mande = E.baghi_poool(40);
-								
-								this_thread::sleep_for(chrono::seconds(7));
-								
-								if(baghi_mande >= 0)
-								{
-									decrease_m(40,E,D);
-									cout << "We have enough money to buy it." << endl;
-									this_thread::sleep_for(chrono::seconds(3));
-									cout << "They buy the rocket launcher and go in the direction the elves told them." << endl;
-									this_thread::sleep_for(chrono::seconds(10));
-									
 									break;
 								}
-								else if(baghi_mande < 0)
-								{
-									cout << "Emma: Oops, we dont have much money to pay." << endl;
+								else if(choise == 2)
+								{			
+									while(true)
+									{
+										cout << "They continue their way in the forest and encounter some unknown characters who attack them." << endl;
+										this_thread::sleep_for(chrono::seconds(5));
+										cout << "Emma:" << endl << "1.Shoot them" << endl << "2.Do not shoot" << endl;
+										cin >> choise ;
+										system("cls");
+										if(choise == 1)
+										{	
+											cout<<"you want 5 bullets \n";//ezafe shod mrs:)
+											if(decreas_bullet(5,E));//**************************************************************************************************
+											   exit(0);
+											cout << "Emma shoots at them to kill them, but realizes that the bullets have no effect." << endl;
+											this_thread::sleep_for(chrono::seconds(8));
+											break;
+										}
+										else if(choise == 2)
+										{
+											break;
+										}
+									}
+									cout << "They hurt Emma and Daniel and then let them go." << endl;
 									this_thread::sleep_for(chrono::seconds(5));
-									cout << "Let's pick up the rocket launcher and escape" << endl;
-									this_thread::sleep_for(chrono::seconds(5));
-									
-											
-									cout << "The elves follow them to stop them" << endl;
-									this_thread::sleep_for(chrono::seconds(4));
-									cout << "They hurt Emma and Daniel while chasing them." << endl;
 									E -= 2;
 									D -= 2;
 									
+									cout << "Emma and Daniel conclude that they were elves." << endl;
 									this_thread::sleep_for(chrono::seconds(5));
-									cout << "Emma and Daniel escape and go in the direction the elves have told them.";
+									cout << "That is why they had an unknown face and the bullets did not affect them." << endl;
 									this_thread::sleep_for(chrono::seconds(10));
 											
 									break;
 								}
-										
-								break;
-							}	
+									
+							}
+							system("cls");
+							cout << "They come to an inscription." << endl;
+							this_thread::sleep_for(chrono::seconds(3));
+							cout << "Daniel realizes that the sign on the inscription is the same as the book sign, so they conclude that they have chosen the right path." << endl;
+							this_thread::sleep_for(chrono::seconds(14));
+							system("cls");
+							
+							save_checkpoint(4,E,D);//save checkpoint mrs:)
 						}
-						system("cls");
-						calm_situation(E,D);
-						system("cls");
-						cout << "Now they go to the thick tree whose details were in the book." << endl;
-						this_thread::sleep_for(chrono::seconds(6));
-						cout << "look around to find the pit." << endl;
-						this_thread::sleep_for(chrono::seconds(4));
-						cout << "Two Nazis see them and secretly arrest them and take them to the pit unconscious and imprison them." << endl;
-						this_thread::sleep_for(chrono::seconds(9));
-						system("CLS");
-						break;
+						if(E.get_checkpoint()==4)//mrs:)
+						{
+							
+							calm_situation(E,D);
+							system("cls");
+									
+							cout << "They continue on their way to reach a strange village." << endl;
+							this_thread::sleep_for(chrono::seconds(5));
+							cout << "They go to the village to get information to talk to the locals." << endl;
+							this_thread::sleep_for(chrono::seconds(7));
+							cout << "When they enter, they see that everyone there has unknown faces and realize that they are goblins." << endl;
+							this_thread::sleep_for(chrono::seconds(9));
+							cout << "They were very scared, kept their composure and went to the people." << endl;
+							this_thread::sleep_for(chrono::seconds(7));
+							cout << "They talked to them about the Nazi movements and figured out which way to go." << endl;
+							this_thread::sleep_for(chrono::seconds(13));
+							system("cls");
+							cout << "Suddenly their eyes hit a rocket and went towards it." << endl;
+							this_thread::sleep_for(chrono::seconds(3));
+									
+							while(true)
+							{
+								cout << "Emma:" << endl << "1.Let's steal it" << endl << "2.Let's buy it" << endl;
+								cin >> choise ;
+								system("cls");
+								if(choise == 1)
+								{
+									cout << "The elves notice and follow them." << endl;
+									this_thread::sleep_for(chrono::seconds(3));
+									cout << "They hurt Emma and Daniel while chasing them." << endl;
+									E -= 2;
+									D -= 2;
+									this_thread::sleep_for(chrono::seconds(5));
+									cout << "Emma and Daniel escape and go in the direction the elves have told them.";
+									this_thread::sleep_for(chrono::seconds(7));
+											
+									break;
+								}
+								else if(choise == 2)
+								{
+									int baghi_mande;
+									cout << "The price of a rocket launcher is 40$ for you" << endl;
+									baghi_mande = E.baghi_poool(40);
+									
+									this_thread::sleep_for(chrono::seconds(7));
+									
+									if(baghi_mande >= 0)
+									{
+										decrease_m(40,E,D);
+										cout << "We have enough money to buy it." << endl;
+										this_thread::sleep_for(chrono::seconds(3));
+										cout << "They buy the rocket launcher and go in the direction the elves told them." << endl;
+										this_thread::sleep_for(chrono::seconds(10));
+										
+										break;
+									}
+									else if(baghi_mande < 0)
+									{
+										cout << "Emma: Oops, we dont have much money to pay." << endl;
+										this_thread::sleep_for(chrono::seconds(5));
+										cout << "Let's pick up the rocket launcher and escape" << endl;
+										this_thread::sleep_for(chrono::seconds(5));
+										
+												
+										cout << "The elves follow them to stop them" << endl;
+										this_thread::sleep_for(chrono::seconds(4));
+										cout << "They hurt Emma and Daniel while chasing them." << endl;
+										E -= 2;
+										D -= 2;
+										
+										this_thread::sleep_for(chrono::seconds(5));
+										cout << "Emma and Daniel escape and go in the direction the elves have told them.";
+										this_thread::sleep_for(chrono::seconds(10));
+												
+										break;
+									}
+											
+									break;
+								}	
+							}
+							system("cls");
+							
+							save_checkpoint(5,E,D);//save checkpoint mrs:)
+						}
+						if(E.get_checkpoint()==5)//mrs:)
+						{
+							
+							system("cls");
+							calm_situation(E,D);
+							system("cls");
+							cout << "Now they go to the thick tree whose details were in the book." << endl;
+							this_thread::sleep_for(chrono::seconds(6));
+							cout << "look around to find the pit." << endl;
+							this_thread::sleep_for(chrono::seconds(4));
+							cout << "Two Nazis see them and secretly arrest them and take them to the pit unconscious and imprison them." << endl;
+							this_thread::sleep_for(chrono::seconds(9));
+							system("CLS");
+							break;
+						}
 					}
 					case 3://start level3
 					{
@@ -1188,16 +1376,17 @@ int main()
 						this_thread::sleep_for(chrono::seconds(4));
 				
 	
-						cout << "Emma:" << "1.telling the truth that she is a spy and she is in the mession" << endl;
-
-						cout << "2.lying and tell that she is just a nomal tourist" << endl;
-
+						
 
 		
 						int choice;
 						
 						while (true)
 						{
+							cout << "Emma:" << "1.telling the truth that she is a spy and she is in the mession" << endl;
+
+							cout << "2.lying and tell that she is just a nomal tourist" << endl;
+
 							cin >> choice;
 							system("cls");
 							if (choice == 1)//Admit that she is a spy
@@ -1246,18 +1435,18 @@ int main()
 						}
 						system("CLS");
 						cout << "Their eyes catch on the rocket launcher and they catch it and run to the end of the corridor behind the room, which leads to a dead end" << endl;
-						this_thread::sleep_for(chrono::seconds(2));
+						this_thread::sleep_for(chrono::seconds(14));
 					
 						cout << "Daniel realizes that this is where the book says and the gate opens" << endl;
-						this_thread::sleep_for(chrono::seconds(2));
+						this_thread::sleep_for(chrono::seconds(6));
 					
 						cout << "Suddenly his eye falls on a flat and strange part of the wall and goes towards him" << endl;
-						this_thread::sleep_for(chrono::seconds(2));
-						system("CLS");
-						cout << "When he touches it, a series of sentences appear in a foreign language and Daniel has to decipher it" << endl;
-						this_thread::sleep_for(chrono::seconds(2));
-		
+						this_thread::sleep_for(chrono::seconds(8));
 						
+						cout << "When he touches it, a series of sentences appear in a foreign language and Daniel has to decipher it" << endl;
+						this_thread::sleep_for(chrono::seconds(14));
+						system("CLS");
+								
 				
 	
 						//enter token to open the alala's gate
@@ -1268,27 +1457,28 @@ int main()
 		
 							if (decryptfunc_token(token) == true)
 							{
+								system("CLS");
 								cout << "Gate is open !";		
 			
-								system("CLS");
+								
 								cout << "When he touches it, a series of sentences appear in a foreign language and Daniel has to decipher it" << endl;
-								this_thread::sleep_for(chrono::seconds(2));
-								system("CLS");
-								cout << "Emma, ​​who was a little further from the gate, has two decisions:" << endl;
-								this_thread::sleep_for(chrono::seconds(2));
-								system("CLS");
-								cout << "1.Go to Daniel to save him" << endl;
-								this_thread::sleep_for(chrono::seconds(2));
-								system("CLS");
-								cout << "2.Move further away from the gate to be safe" << endl;
-								this_thread::sleep_for(chrono::seconds(2));
-								system("CLS");
-					
+								this_thread::sleep_for(chrono::seconds(10));
+								system("cls");
+							
 		
-								int choice2;
-								cin >> choice2;
 								while (true)
-								{
+								{	
+									cout << "Emma, who was a little further from the gate, has two decisions:" << endl;
+						
+								
+									cout << "1.Go to Daniel to save him" << endl;
+							
+								
+									cout << "2.Move further away from the gate to be safe" << endl;
+							
+									int choice2;
+									cin >> choice2;
+					
 									if (choice2 == 1) //save daneil
 									{
 										//She dies to save his life
@@ -1303,17 +1493,18 @@ int main()
 										system("cls");
 										cout << " Alala tells him the story of the Nazisand tells them that you must get them out so that they do not harm the world any more" << endl;
 										this_thread::sleep_for(chrono::seconds(10));
-										system("CLS");
-										cout << "It gives Daniel the right to choose between two things" << endl;
-										this_thread::sleep_for(chrono::seconds(2));
-									
-										cout << "1.Reach the supernatural power" << endl;
-	
-		
-										cout << "2.Let her live" << endl;
+							
+										
 									
 										while (true)
-										{
+										{	
+											cout << "It gives Daniel the right to choose between two things" << endl;
+										
+									
+											cout << "1.Reach the supernatural power" << endl;
+	
+		
+											cout << "2.Let her live" << endl;
 											int choiceD;
 											cin >> choiceD; //daneil choise
 											system("cls");
@@ -1332,7 +1523,7 @@ int main()
 											{
 												//bring emma to life
 											
-												cout << "emma comes alive and together they destroy the trachea of ​​that area" << endl;
+												cout << "emma comes alive and together they destroy Destroyed the Nazis of that area" << endl;
 												this_thread::sleep_for(chrono::seconds(7));
 												
 												break;
@@ -1340,6 +1531,8 @@ int main()
 											else
 											{
 												cout << "An error has occurred!";
+												this_thread::sleep_for(chrono::seconds(3));
+												system("cls");
 											}
 			
 										}
@@ -1363,6 +1556,8 @@ int main()
 									else
 									{
 										cout << "An error has occurred!";
+										this_thread::sleep_for(chrono::seconds(3));
+										system("cls");
 									}
 								}
 								system("cls");
@@ -1371,6 +1566,8 @@ int main()
 							else
 							{
 								cout << "Can't enter gate:(";
+								this_thread::sleep_for(chrono::seconds(3));
+								system("cls");
 							}
 						}
 						system("cls");
