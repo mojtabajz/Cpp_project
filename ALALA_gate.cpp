@@ -646,8 +646,6 @@ void calm_situation(person& E, person& D)// to mogheiat hahe arom continue,statu
 			this_thread::sleep_for(chrono::seconds(5));
 			D.print_information();
 			this_thread::sleep_for(chrono::seconds(5));			
-				
-			system("cls");
 			
 		}
 		else 
