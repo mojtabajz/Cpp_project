@@ -36,33 +36,42 @@ public:
 		this->size_bullet = size_bullet;
 	}
 	
-	bool de_sb(int per_click) {//*****taghir dadam mrs:)
-		
-		if(size_bullet - per_click>=0){
-			size_bullet -= per_click;
-			return 1;			
-		}
-		
-		else{
-			system("Color 04");
-			cout<<"you will die :)))))))))by by ";
-			if(audio(5)==true)//ezafe shod mrs:))
-			{
-				cout<<"\a ";	
-				this_thread::sleep_for(chrono::milliseconds(500));
-				cout<<"\a ";
-				this_thread::sleep_for(chrono::milliseconds(500));
-				cout<<"\a ";
-				this_thread::sleep_for(chrono::milliseconds(500));
-				cout<<"\a ";
-				this_thread::sleep_for(chrono::milliseconds(500));
-				cout<<"\a ";
+	bool de_sb(int per_click) {//***taghir dadam mrs:)
+		while(true)//ezafe shod mrs:)
+		{
+			if(size_bullet - per_click>=0){
+				size_bullet -= per_click;
+				return 1;			
 			}
-			this_thread::sleep_for(chrono::seconds(3));
-			system("Color 0f");
-			return 0;
-		}
-		
+			
+			else
+				if(func_reload())//ezafe shod mrs:)
+				{
+					continue;					
+				}
+				else
+				{
+					system("Color 04");
+					cout<<"you will die :))))by by ";
+					
+					if(audio(5)==true)//ezafe shod mrs:))
+					{
+						cout<<"\a ";	
+						this_thread::sleep_for(chrono::milliseconds(500));
+						cout<<"\a ";
+						this_thread::sleep_for(chrono::milliseconds(500));
+						cout<<"\a ";
+						this_thread::sleep_for(chrono::milliseconds(500));
+						cout<<"\a ";
+						this_thread::sleep_for(chrono::milliseconds(500));
+						cout<<"\a ";
+					}
+					this_thread::sleep_for(chrono::seconds(3));
+					system("cls");
+					system("Color 0f");
+					return 0;
+				}
+		}//ezafe shod mrs:)
 	}
 	
 	bool func_reload(){//amaliat reload mrs:)
@@ -708,7 +717,7 @@ bool decryptfunc_token(string token)//Caesar Cipher decryptfunc with 3 times shi
 
 //in tabe baraye save kardan mavaghei hast ke mikhaim ezafe beshe be filemon mrs:)
 void save_append(person &E,person &D){
-	ofstream saver("save_E.txt", ios::app);
+	ofstream saver("save_E.txt", ios::app|ios::binary);
 	if (!saver) {
 		cerr << "can not open\n";
 		exit(0);
@@ -909,19 +918,26 @@ int main()
 						cout<<"please input your id \n";//ezafe kardan ghesmat continue mrs:)
 						while(true){
 							cin>>id;
+							system("cls");
 							if(check_id(E,D,id)){
 
 								cout<<"loading succesful:)\n ";
+								this_thread::sleep_for(chrono::seconds(2));
+								system("cls");
 								E.print_information();
 								this_thread::sleep_for(chrono::seconds(4));
+								system("cls");
 								D.print_information();
 								this_thread::sleep_for(chrono::seconds(4));
+								system("cls");
 								E.set_mode(mode);//ezafe shod baraye taghir sakhti bazi mrs:)
 								D.set_mode(mode);//ezafe shod baraye taghir sakhti bazi mrs:)
 								break;
 							}
 							else{
 								cout<<"try again :( \n";
+								this_thread::sleep_for(chrono::seconds(1));
+								system("cls");
 							}
 						}
 						marhale=E.get_marhale();//befahme az kodom marhale shoro kone mrs:)
@@ -1753,21 +1769,28 @@ int main()
 			{
 				cout << "1.mode" << endl << "2.audio" << endl;				
 				cin >> which;
+				system("cls");
 				if(which==1){//ezafe shod mrs:)
 					cout << "1.easy" << endl << "2.hard" << endl;	//ezafe shod mrs:)
 					cin>>mode;	//ezafe shod mrs:)
+					system("cls");
 					cout<<"please input your id \n";//ezafe kardan ghesmat continue mrs:)
 						while(true){//ezafe shod mrs:)
 							cin>>id;//ezafe shod mrs:)
+							system("cls");
 							if(check_id(E,D,id)){//ezafe shod mrs:)
 							
-								cout<<"loading succesful:)\n ";//ezafe shod mrs:)								
+								cout<<"loading succesful:)\n ";//ezafe shod mrs:)	
+								this_thread::sleep_for(chrono::seconds(2));
+								system("cls");							
 								E.set_mode(mode);//ezafe shod baraye taghir sakhti bazi mrs:)
 								D.set_mode(mode);//ezafe shod baraye taghir sakhti bazi mrs:)
 								break;//ezafe shod mrs:)
 							}
 							else{//ezafe shod mrs:)
 								cout<<"try again :( \n";//ezafe shod mrs:)
+								this_thread::sleep_for(chrono::seconds(1));
+								system("cls");
 							}//ezafe shod mrs:)
 							
 						}//ezafe shod mrs:)
@@ -1777,6 +1800,7 @@ int main()
 					int i=0;
 					cout<<"1.off \t"<<"2.on\n";
 					cin>>i;
+					system("cls");
 					audio(i);
 				}
 				break;
