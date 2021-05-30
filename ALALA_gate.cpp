@@ -133,7 +133,6 @@ class person {
 	template<typename t>// mrs:)
 	friend void operator+=(person &p,t increase);//mrs:)
 
-
 	template<typename t>//mrs:)
 	friend void operator-=(person &P,t mitigate);//mrs:)
 	
@@ -265,12 +264,12 @@ public:
 		if(gew43.have==1){
 			//cout<<"all bullet: "<<gew41.all_bullets;
 			//cout<<"size bullet: "<<gew41.size_bullet;
-			cout << gew41.all_bullets << "/" << gew41.size_bullet << endl;//mojtaba
+			cout << gew43.all_bullets << "/" << gew43.size_bullet << endl;//mojtaba
 		}
 		if(vol.have==1){
 			//cout<<"all bullet: "<<gew41.all_bullets;
 			//cout<<"size bullet: "<<gew41.size_bullet;
-			cout << gew41.all_bullets << "/" << gew41.size_bullet << endl;//mojtaba
+			cout << vol.all_bullets << "/" << vol.size_bullet << endl;//mojtaba
 		}
 	}	
 	
@@ -330,7 +329,6 @@ bool Baghi_pool(t decrease_money,person&E,person&D)
 	}
 }mojtaba*/ 
 
-
 template <typename T>
 void decrease_m(T decrease_money,person&E,person&D)// az pool kam mikone  *****header ro taghir dadam mrs:)
 {
@@ -347,7 +345,7 @@ void Add_m(T Add_money,person&E,person&D)// be pool ezafe mikone ******header ro
 	D.All_money+=Add_money;//mrs:)
 }
 
-template<typename t>// mrs:)
+template<typename t>// mrs:)//taghir dade shod mrs:))
 void operator-=(person &p,t mitigate){// baraye kam shodan jon mrs:)
 	if(p.mode==1)//mrs:)
 		p.health-=mitigate;//mrs:)
@@ -355,6 +353,13 @@ void operator-=(person &p,t mitigate){// baraye kam shodan jon mrs:)
 		if(p.mode==2){//mrs:)
 			p.health-=(mitigate*1.5);//mrs:)
 		}//mrs:)
+	if(p.health<0){//taghir dade shod mrs:)
+		cout<<"your health is under 0 you will die :(((((( by by";//mrs:)
+		this_thread::sleep_for(chrono::seconds(4));
+		system("cls");
+		exit(0);
+	}
+	
 }//mrs:)
 
 template<typename t>// mrs:)
@@ -640,7 +645,6 @@ bool decreas_bullet(int BULLET,person &E)//**********************inja taghirati 
 			}
 			else{
 				return 0;
-				cout<<"can not";
 			}
 		}
 		
@@ -897,16 +901,19 @@ void SubLevel(T cash,T h,person& E,person& D)//start sublevel
 	this_thread::sleep_for(chrono::seconds(6));
 	cout << "They see a black bear sitting on the ground." << endl;
 	this_thread::sleep_for(chrono::seconds(5));
-	cout<<"you want 1 bullets \n";//ezafe shod mrs:)
-	
-	if(!decreas_bullet(1,E))//*******************************************************
-		exit(0);
+	//cout<<"you want 1 bullets \n";//ezafe shod mrs:)	
 		  
 	cout << "Emma draws her gun and points it at the bear." << endl;
 	this_thread::sleep_for(chrono::seconds(5));
-	cout << "He kills the bear with just one bullet." << endl;
+	cout << "She kills the bear with just one bullet." << endl;
 	this_thread::sleep_for(chrono::seconds(4));
-	
+	if(!decreas_bullet(1,E))//*******************************************************
+	{
+		cout<<"You have a few bullets to shoot. You will be killed by that bear";//mrs:)
+		this_thread::sleep_for(chrono::seconds(4));
+		system("cls");
+		exit(0);
+	}
 	cout << "They go to the city and sell the bear." << endl;
 	this_thread::sleep_for(chrono::seconds(4));
 	cout << "They eat with some of that money." << endl;
@@ -1125,13 +1132,18 @@ int main()
 								system("cls");
 								if (choise == 1)
 								{
-									cout<<"you want 3 bullets \n";
-									if(!decreas_bullet(3,E))//****************************************************************************
-									    exit(0);
+									//cout<<"you want 3 bullets \n";
+									
 									cout << "Emma fires three bullets at the Nazis and kills two of them" << endl;
 									this_thread::sleep_for(chrono::seconds(5));
 									//print_bullet();
-																	
+									if(!decreas_bullet(3,E))//****************************************************************************
+									{
+										cout << "You fired less bullets and were killed by the Nazis" << endl;
+										this_thread::sleep_for(chrono::seconds(4));
+										system("cls");
+										exit(0);
+									}
 									cout << "Then Emma runs away" << endl;
 									this_thread::sleep_for(chrono::seconds(2));
 									cout << "The Nazis chase after them and shoot at them.\n";
@@ -1223,15 +1235,18 @@ int main()
 												cin >> choise;
 												system("cls");
 												if (choise == 1)
-												{
-													cout<<"you want 1 bullets \n";//ezafe shod mrs:)
-													if(!decreas_bullet(1,E))//*******************************************************
-													   exit(0);
+												{												
 													cout << "Daniel throws a stone at the Nazi soldier." << endl;
 													this_thread::sleep_for(chrono::seconds(3));
-													cout << "Nazia gets angry and points her gun at Daniel, who is suddenly shot by Emma from a distance." << endl;
-													
+													cout << "Nazia gets angry and points her gun at Daniel, who is suddenly shot by Emma from a distance." << endl;													
 													this_thread::sleep_for(chrono::seconds(7));
+													if(!decreas_bullet(1,E))//*******************************************************
+													{
+														cout << "You fired less bullets and were killed by the Nazis" << endl;
+														this_thread::sleep_for(chrono::seconds(4));
+														system("cls");
+														exit(0);
+													}
 													break;
 												}
 												else if (choise == 2)
@@ -1408,11 +1423,17 @@ int main()
 										system("cls");
 										if(choise == 1)
 										{	
-											cout<<"you want 5 bullets \n";//ezafe shod mrs:)
-											if(decreas_bullet(5,E))//**************************************************************************************************
-											   exit(0);
+											//cout<<"you want 5 bullets \n";//ezafe shod mrs:		
 											cout << "Emma shoots at them to kill them, but realizes that the bullets have no effect." << endl;
 											this_thread::sleep_for(chrono::seconds(8));
+											if(!decreas_bullet(5,E))//**************************************************************************************************
+											{
+												cout << "You fired less bullets and were killed by the Nazis" << endl;
+												this_thread::sleep_for(chrono::seconds(4));
+												system("cls");
+												exit(0);
+											}
+										
 											break;
 										}
 										else if(choise == 2)
@@ -1497,9 +1518,9 @@ int main()
 								}
 								else if(choise == 2)
 								{
-									int baghi_mande;
+									//int baghi_mande;
 									cout << "The price of a rocket launcher is 40$ for you" << endl;
-									baghi_mande = E.baghi_pool(40);
+									//baghi_mande = E.baghi_pool(40);
 									
 									this_thread::sleep_for(chrono::seconds(7));
 									
@@ -1513,7 +1534,7 @@ int main()
 										
 										break;
 									}
-									else if(!(E.baghi_pool(40))  /*baghi_mande < 0*/)
+									else
 									{
 										cout << "Emma: Oops, we dont have much money to pay." << endl;
 										this_thread::sleep_for(chrono::seconds(5));
@@ -1532,15 +1553,7 @@ int main()
 										this_thread::sleep_for(chrono::seconds(10));
 												
 										break;
-									}
-									else
-									{
-										system("cls");
-										cout << "you have choose wrong oprator" << endl << "please select one of the given numbers" << endl;
-										this_thread::sleep_for(chrono::seconds(6));
-										system("cls");
-									}
-											
+									}		
 									break;
 								}
 								else
@@ -1803,11 +1816,7 @@ int main()
 									
 										cout << "After the destruction of the Nazis, they take people out of prison and save them, and they destroy that pit forever" << endl;
 										this_thread::sleep_for(chrono::seconds(10));
-										
-										cout << "The END ..." << endl;
-										this_thread::sleep_for(chrono::seconds(4));
-									
-										break;
+										break;									
 									}
 									else
 									{
@@ -1828,6 +1837,8 @@ int main()
 							}
 						}
 						system("cls");
+						cout << "The END ..." << endl;
+						this_thread::sleep_for(chrono::seconds(4));
 						break;
 					}//end case 3
 				}//end swich
