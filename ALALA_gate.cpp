@@ -212,12 +212,24 @@ public:
 	}mrs:)*/
 	
 	template <typename t>
-	int baghi_poool(t roket)
+	bool baghi_pool(t gheymat)
 	{
-		double baghi_poool;
-		baghi_poool = All_money - roket;
-		return baghi_poool;
+		double baghi_pool;
+		baghi_pool = All_money - gheymat;
+		if(baghi_pool >= 0)
+		{
+			return true;
+		}
+		else
+		{
+			cout << "You do not have enough money." << endl << "You have " << All_money << "$" << endl;
+			//this_thread::sleep_for(chrono::seconds(5));		
+			//system("CLS");
+			return false;
+		}
+		//return baghi_poool;
 	}
+	
 	void have_gun(int which){//baraye equip gun mrs:)
 		if(which==1)
 			kar.have=1;
@@ -301,6 +313,24 @@ private:
 //long int person::money = 1000;     hazf
 
 //person p1(1);//ba header call mikonim mrs:)
+
+/*template <typename t>
+bool Baghi_pool(t decrease_money,person&E,person&D)
+{
+	if(E.All_money-decrease_money >= 0)
+	{		
+		return true;
+	}
+	else
+	{
+		cout << "You do not have enough money." << endl << "You have " << E.All_money << "$" << endl;
+		//this_thread::sleep_for(chrono::seconds(5));		
+		//system("CLS");
+		return false;
+	}
+}mojtaba*/ 
+
+
 template <typename T>
 void decrease_m(T decrease_money,person&E,person&D)// az pool kam mikone  *****header ro taghir dadam mrs:)
 {
@@ -369,7 +399,7 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && E.kar.havee()==0)//taghir dadam mrs:)
+				else if (choise == 1 && E.kar.havee()==0 && E.baghi_pool(15))//taghir dadam mrs:)
 				{
 				decrease_m(15,E,D);
 					E.have_gun(1);
@@ -394,7 +424,7 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && E.gew41.havee()== 0)//taghir dadam mrs:)
+				else if (choise == 1 && E.gew41.havee()== 0 && E.baghi_pool(18.5))//taghir dadam mrs:)
 				{
 					decrease_m(18.5,E,D);
 					E.have_gun(2);
@@ -419,7 +449,7 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && E.gew43.havee()== 0)//taghir dadam mrs:)
+				else if (choise == 1 && E.gew43.havee()== 0 && E.baghi_pool(20.5))//taghir dadam mrs:)
 				{
 					decrease_m(20.5,E,D);
 					E.have_gun(3);
@@ -444,7 +474,7 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && E.vol.havee() == 0)//taghir dadam mrs:)
+				else if (choise == 1 && E.vol.havee() == 0 && E.baghi_pool(25))//taghir dadam mrs:)
 				{
 					decrease_m(25,E,D);
 					E.have_gun(4);
@@ -477,7 +507,7 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && E.kar.havee() == 1)//taghir dadam mrs:)
+				else if (choise == 1 && E.kar.havee() == 1 && E.baghi_pool(5))//taghir dadam mrs:)
 				{
 					decrease_m(5,E,D);
 					
@@ -486,6 +516,12 @@ void shop(person& E, person& D)
 					//Gun[0].All_bullets(10);mrs:))
 					break;
 				}
+				else
+		        {		
+		          cout << "you have choose wrong bullet for your gun" << endl << "Please buy another one";
+		          this_thread::sleep_for(chrono::seconds(5));
+		          system("cls");
+		        }
 			}
 			else if (choise == 2)
 			{
@@ -495,7 +531,7 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && E.gew41.havee() == 1)//taghir dadam mrs:)
+				else if (choise == 1 && E.gew41.havee() == 1 && E.baghi_pool(9.5))//taghir dadam mrs:)
 				{
 					decrease_m(9.5,E,D);
 					E.gew41.All_bullets(15);
@@ -503,6 +539,12 @@ void shop(person& E, person& D)
 
 					break;
 				}
+				else
+		        {		
+		          cout << "you have choose wrong bullet for your gun" << endl << "Please buy another one";
+		          this_thread::sleep_for(chrono::seconds(5));
+		          system("cls");
+		        }
 			}
 			else if (choise == 3)
 			{
@@ -512,7 +554,7 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && E.gew43.havee() == 1)//taghir dadam mrs:)
+				else if (choise == 1 && E.gew43.havee() == 1 && E.baghi_pool(9.5))//taghir dadam mrs:)
 				{
 					decrease_m(9.5,E,D);
 					E.gew43.All_bullets(15);//mrs:)
@@ -520,6 +562,12 @@ void shop(person& E, person& D)
 
 					break;
 				}
+				else
+		        {		
+		          cout << "you have choose wrong bullet for your gun" << endl << "Please buy another one";
+		          this_thread::sleep_for(chrono::seconds(5));
+		          system("cls");
+		        }
 			}
 			else if (choise == 4)
 			{
@@ -529,7 +577,7 @@ void shop(person& E, person& D)
 				{
 					break;
 				}
-				else if (choise == 1 && E.vol.havee() == 1)//taghir dadam mrs:)
+				else if (choise == 1 && E.vol.havee() == 1 && E.baghi_pool(15))//taghir dadam mrs:)
 				{
 					decrease_m(15,E,D);
 					E.vol.All_bullets(20);
@@ -537,6 +585,12 @@ void shop(person& E, person& D)
 
 					break;
 				}
+				else
+		        {		
+		          cout << "you have choose wrong bullet for your gun" << endl << "Please buy another one";
+		          this_thread::sleep_for(chrono::seconds(5));
+		          system("cls");
+		        }
 			}
 		}
 		while (choise == 3)
@@ -549,19 +603,19 @@ void shop(person& E, person& D)
 			{
 				break;
 			}
-			else if (choise == 1)
+			else if (choise == 1 && E.baghi_pool(10))
 			{
 				decrease_m(10,E,D);
 				E += 1;
 				D += 1;
 			}
-			else if (choise == 2)
+			else if (choise == 2 && E.baghi_pool(5))
 			{
 				decrease_m(5,E,D);
 				E += 0.5;
 				D += 0.5;
 			}
-			else if (choise == 3)
+			else if (choise == 3 && E.baghi_pool(15))
 			{
 				decrease_m(15,E,D);
 				E += 1.5;
@@ -1445,11 +1499,11 @@ int main()
 								{
 									int baghi_mande;
 									cout << "The price of a rocket launcher is 40$ for you" << endl;
-									baghi_mande = E.baghi_poool(40);
+									baghi_mande = E.baghi_pool(40);
 									
 									this_thread::sleep_for(chrono::seconds(7));
 									
-									if(baghi_mande >= 0)
+									if(E.baghi_pool(40)  /*baghi_mande >= 0*/)
 									{
 										decrease_m(40,E,D);
 										cout << "We have enough money to buy it." << endl;
@@ -1459,7 +1513,7 @@ int main()
 										
 										break;
 									}
-									else if(baghi_mande < 0)
+									else if(!(E.baghi_pool(40))  /*baghi_mande < 0*/)
 									{
 										cout << "Emma: Oops, we dont have much money to pay." << endl;
 										this_thread::sleep_for(chrono::seconds(5));
@@ -1567,7 +1621,7 @@ int main()
 						
 						while (true)
 						{
-							cout << "Emma:" << "1.telling the truth that she is a spy and she is in the mession" << endl;
+							cout << "Emma:" << endl << "1.telling the truth that she is a spy and she is in the mession" << endl;
 
 							cout << "2.lying and tell that she is just a nomal tourist" << endl;
 
@@ -1638,6 +1692,21 @@ int main()
 						//enter token to open the alala's gate
 						for(int w=0;w<3;w++)
 						{
+							system("CLS");
+							cout << "Now they are facing the gate" << endl;
+							this_thread::sleep_for(chrono::seconds(4));
+							cout << "To enter, they must enter a password" << endl;
+							this_thread::sleep_for(chrono::seconds(4));
+							cout << "They must enter a password that is encrypted with the gateway name" << endl;
+							this_thread::sleep_for(chrono::seconds(8));
+							cout << "The password is encrypted in one of the following ways" << endl;
+							this_thread::sleep_for(chrono::seconds(8));
+							cout << "1)Palyfair" << endl << "2)Caesar" << endl << "3)Vigenere" << endl;
+							this_thread::sleep_for(chrono::seconds(8));
+							cout << "Now decrypt !!" << endl;
+							this_thread::sleep_for(chrono::seconds(8));
+		
+							system("CLS");
 							string token;
 							cin >> token;
 		
@@ -1684,7 +1753,7 @@ int main()
 									
 										while (true)
 										{	
-											cout << "It gives Daniel the right to choose between two things" << endl;
+											cout << "It gives Daniel the right to choose between two things." << endl;
 										
 									
 											cout << "1.Reach the supernatural power" << endl;
