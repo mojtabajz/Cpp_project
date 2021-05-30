@@ -1581,7 +1581,7 @@ int main()
 							cout << "Two Nazis see them and secretly arrest them and take them to the pit unconscious and imprison them." << endl;
 							this_thread::sleep_for(chrono::seconds(9));
 							system("CLS");
-							break;
+							//break;
 						}
 					}
 					case 3://start level3
@@ -1726,7 +1726,7 @@ int main()
 							if (decryptfunc_token(token) == true)
 							{
 								system("CLS");
-								cout << "Gate is open !";		
+								cout << "Gate is open !" << endl;		
 			
 								
 								cout << "When he touches it, a series of sentences appear in a foreign language and Daniel has to decipher it" << endl;
@@ -1834,12 +1834,19 @@ int main()
 								cout << "Can't enter gate:(";
 								this_thread::sleep_for(chrono::seconds(3));
 								system("cls");
+								if(w == 2)
+								{
+									cout << "You lose.:(" << endl;
+									this_thread::sleep_for(chrono::seconds(3));
+									system("cls");
+									exit(0);
+								}
 							}
 						}
 						system("cls");
 						cout << "The END ..." << endl;
 						this_thread::sleep_for(chrono::seconds(4));
-						break;
+						exit(0);
 					}//end case 3
 				}//end swich
 				break;
