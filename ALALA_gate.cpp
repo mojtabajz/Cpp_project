@@ -83,7 +83,9 @@ public:
 			return true;
 		}						
 		else{
-			cout<<"you don`t have bullet :(( \n";
+			cout<< "There is no more bullet for reloading." << endl;
+			this_thread::sleep_for(chrono::seconds(3));
+			system("cls");
 			return 0;
 		}
 	}
@@ -161,7 +163,7 @@ public:
 			cout<<"Daniel\n";
 		cout<<"your id is :"<<id<<endl;
 		cout<<"your health is :"<<health<<endl;
-		cout<<"your money is :"<<All_money<< "$" <<endl;
+		cout<<"your money is :"<<All_money<< "$" <<endl << endl;
 	}
 	
 	int get_id()const{//baraye malom kardan id mrs:)
@@ -236,18 +238,18 @@ public:
 		if(gew41.have==1){
 			//cout<<"all bullet: "<<gew41.all_bullets;
 			//cout<<"size bullet: "<<gew41.size_bullet;
-			cout << kar.all_bullets << "/" << kar.size_bullet << endl;//mojtaba
+			cout << gew41.all_bullets << "/" << gew41.size_bullet << endl;//mojtaba
 
 		}
 		if(gew43.have==1){
 			//cout<<"all bullet: "<<gew41.all_bullets;
 			//cout<<"size bullet: "<<gew41.size_bullet;
-			cout << kar.all_bullets << "/" << kar.size_bullet << endl;//mojtaba
+			cout << gew41.all_bullets << "/" << gew41.size_bullet << endl;//mojtaba
 		}
 		if(vol.have==1){
 			//cout<<"all bullet: "<<gew41.all_bullets;
 			//cout<<"size bullet: "<<gew41.size_bullet;
-			cout << kar.all_bullets << "/" << kar.size_bullet << endl;//mojtaba
+			cout << gew41.all_bullets << "/" << gew41.size_bullet << endl;//mojtaba
 		}
 	}	
 	
@@ -343,7 +345,7 @@ void shop(person& E, person& D)
 		system("cls");
 		if (choise == 0)
 		{
-			return;
+			break;
 		}
 		while (choise == 1)
 		{
@@ -631,7 +633,7 @@ void calm_situation(person& E, person& D)// to mogheiat hahe arom continue,statu
 		if(choise == 1)
 		{
 			save_replace(E,D);
-			return ;
+			break;
 		}
 		else if(choise == 2)
 		{
@@ -645,7 +647,8 @@ void calm_situation(person& E, person& D)// to mogheiat hahe arom continue,statu
 			E.print_bullet();
 			this_thread::sleep_for(chrono::seconds(5));
 			D.print_information();
-			this_thread::sleep_for(chrono::seconds(5));			
+			this_thread::sleep_for(chrono::seconds(5));
+			system("cls");	
 			
 		}
 		else 
@@ -784,19 +787,43 @@ bool check_id(person &E,person &D,int id){
 }
 
 bool set_id(person &copy){//baraye ok kardan ghesmat new game  mrs:)
-	ifstream check("save_E.txt", ios::in);
+	ifstream check("save_E.txt", ios::in);//taghir dobare mrs:)
+	if (!check) {//taghir dobare mrs:)
+		//cerr << "file save peyda nashod \n "; hazf shod bedard nemikhord mrs:)
+		return false;//baraye inke be id 1 ro ezafe nakone mrs:)
+	}	
+	else{//taghir dobare mrs:)
+		check.read(reinterpret_cast<char *>(&copy), 
+	      sizeof(person));
+	
+	   // read all records from file
+	   while (check && !check.eof()) //taghir dobare mrs:)
+	   {            
+	
+	      // read next from file
+	      check.read(reinterpret_cast<char *>(&copy),
+	         sizeof(person));
+	   }
+	    if(check.eof()){//taghir dobare mrs:)
+	 	   check.clear();//fek konam bodan in khat va badish lazem nabashe mrs:)
+	    	check.seekg(0);
+		}
+		return true;
+	}
+	/*ifstream check("save_E.txt", ios::in);
 	if (!check) {
 		//cerr << "file save peyda nashod \n "; hazf shod bedard nemikhord mrs:)
 		return false;//baraye inke be id 1 ro ezafe nakone mrs:)
 	}	
 	else{
-		check.seekg(-1*sizeof(person),ios::end);		
+		int signed_v = (-1 * (int)sizeof(person));
+		check.seekg(signed_v,ios::end);		
 
-	check.read(reinterpret_cast<char*>(&copy),
-		sizeof(person));		
-	check.close();
+		check.read(reinterpret_cast<char*>(&copy),
+			sizeof(person));		
+		check.close();
 	}
-	return true;//baraye inke yek ro ezafe kone mrs:)
+	return true;//baraye inke yek ro ezafe kone mrs:)*/
 }
 
 template <typename T>
@@ -810,7 +837,7 @@ void SubLevel(T cash,T h,person& E,person& D)//start sublevel
 	cout<<"you want 1 bullets \n";//ezafe shod mrs:)
 	
 	if(!decreas_bullet(1,E))//*******************************************************
-		  exit(0);
+		exit(0);
 		  
 	cout << "Emma draws her gun and points it at the bear." << endl;
 	this_thread::sleep_for(chrono::seconds(5));
@@ -984,6 +1011,12 @@ int main()
 								{
 									cout << "It was a good choice." << endl;
 									break;
+								}
+								else
+								{
+									cout << "you have not bought any gun" << endl << "Please select one gun atleast" << endl;
+									this_thread::sleep_for(chrono::seconds(4));
+									system("cls");
 								}
 							}
 							this_thread::sleep_for(chrono::seconds(3));
@@ -1222,18 +1255,18 @@ int main()
 							E.set_marhale(2);//mrs:)
 							D.set_marhale(2);//mrs:)
 							save_checkpoint(3,E,D);//save checkpoint mrs:)
-						}
-						calm_situation(E,D);
-						system("cls");
-						
+						}												
 					}
 					case 2:
-					{
+					{							
 						if(E.get_checkpoint()==3)//mrs:)
 						{
 							int choise;
 							cout << "2: In search of the pit" << endl;
 							this_thread::sleep_for(chrono::seconds(4));
+							
+							system("cls");
+							calm_situation(E,D);
 							system("cls");
 							
 							cout << "Daniel and Emma stayed overnight in the temple and headed out into the woods in the morning." << endl;
