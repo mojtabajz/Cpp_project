@@ -1831,12 +1831,12 @@ int main()
 							}
 							else
 							{
-								cout << "Can't enter gate:(";
+								cout << "Can't enter gate:(" << endl;
 								this_thread::sleep_for(chrono::seconds(3));
 								system("cls");
 								if(w == 2)
 								{
-									cout << "You lose.:(" << endl;
+									cout << "You lose.:(";
 									this_thread::sleep_for(chrono::seconds(3));
 									system("cls");
 									exit(0);
